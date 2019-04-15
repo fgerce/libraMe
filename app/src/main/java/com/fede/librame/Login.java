@@ -20,7 +20,7 @@ public class Login extends AppCompatActivity {
 
     private EditText edituser;
     private EditText editpassword;
-
+    static final int PICK_NEW_USER = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toCreate = new Intent().setClass(Login.this, CreateUser.class);
-                startActivity(toCreate);
+                startActivityForResult(toCreate,PICK_NEW_USER);
             }
         });
 
@@ -58,6 +58,22 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == PICK_NEW_USER) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                String result=data.getStringExtra("result");
+                edituser.setText(result);
+            }
+
+            if (resultCode == CreateUser.NO_USER) {
+                Toast.makeText(this, "No generado", Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 }

@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_main_setting:
                         Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                         return true;
+
                     default:
                         return false;
                 }
