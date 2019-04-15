@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">LibraMe</string>
+    <string name="User">Usuario</string>
+    <string name="Password">Contraseña</string>
+    <string name="Login">Log In</string>
+    <string name="SignUp">Nuevo usuario</string>
+    <string name="Noaccount">¿No tienes cuenta?</string>
+    <string name="Forgotpass">Olvidé mi contraseña</string>
+    <string name="staylog">Mantenerme logueado</string>
+    <string name="ingreso">Ingreso al sistema</string>
+    <string name="back">Atrás</string>
+    <string name="End">Finalizar</string>
+    <string name="Newuser">Nuevo usuario</string>
+    <string name="email">Email</string>
+    <string name="wronguser">Usuario y/o contraseña incorrecta</string>
+    <string name="ingresando">Ingresando</string>
+    <string name="menuseleccion">Listado libros</string>
+</resources>
