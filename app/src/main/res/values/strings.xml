@@ -15,4 +15,20 @@
     <string name="wronguser">Usuario y/o contraseña incorrecta</string>
     <string name="ingresando">Ingresando</string>
     <string name="menuseleccion">Listado libros</string>
+
+    //Strings para carga de libros
+    <string name="ISBN13">ISBN13</string>
+    <string name="ISBN10">ISBN10</string>
+    <string name="Autor">Autor</string>
+    <string name="Edicion">Edicion</string>
+    <string name="Encuadernacion">Encuadernacion</string>
+    <string name="EjEncuadernacion">Tapa dura</string>
+    <string name="Editorial">Editorial</string>
+    <string name="Fecha">Fecha</string>
+    <string name="EjFecha">AAAA-MM-DD</string>
+    <string name="Precio">Precio</string>
+    <string name="EjPrecio">Precio (USD)</string>
+    <string name="nuevolibro">Nuevo libro</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Agregar">Agregar</string>
 </resources>

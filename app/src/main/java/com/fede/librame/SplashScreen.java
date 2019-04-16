@@ -25,9 +25,8 @@ public class SplashScreen extends AppCompatActivity {
             copyDataBase();
         }catch (Exception e)
         {
-            Toast.makeText(this, "Error base de datos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error en la base de datos", Toast.LENGTH_SHORT).show();
         }
-
 
         TimerTask task = new TimerTask() {
             @Override
