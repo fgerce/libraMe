@@ -1,5 +1,6 @@
 package com.fede.librame;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     public ListView listBooks;
     public Toolbar toolbar;
+    public String userlog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
+        userlog = getIntent().getExtras().getString("User"," ");
+        toolbar.setTitle("Hola " + userlog);
         toolbar.setSubtitle(getResources().getString(R.string.menuseleccion));
         toolbar.inflateMenu(R.menu.toolbar_menu);
 

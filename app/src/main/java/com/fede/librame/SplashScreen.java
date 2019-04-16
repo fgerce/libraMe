@@ -3,6 +3,8 @@ package com.fede.librame;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,6 +21,14 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        try {
+            copyDataBase();
+        }catch (Exception e)
+        {
+            Toast.makeText(this, "Error base de datos", Toast.LENGTH_SHORT).show();
+        }
+
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -34,13 +44,12 @@ public class SplashScreen extends AppCompatActivity {
 
     public void copyDataBase() throws IOException
     {
-
         UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe.db", null, 1);
         //Open your local db as the input stream
         InputStream myInput = SplashScreen.this.getAssets().open("libraMe.db");
 
         // Path to the just created empty db
-        String outFileName = "/data/data/paquete/databases/libraMe.db";
+        String outFileName = "/data/data/com.fede.librame/databases/libraMe.db";
         // String outFileName = context.getDatabasePath("Manatab").getPath();
         //Open the empty db as the output stream
         OutputStream myOutput = new FileOutputStream(outFileName);

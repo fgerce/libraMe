@@ -1,6 +1,9 @@
 package com.fede.librame;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +13,6 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
 
-    public static final String validUser = "Fede";
-    public static final String validPass = "1234";
     public String username;
     public String password;
 
@@ -21,10 +22,19 @@ public class Login extends AppCompatActivity {
     private EditText edituser;
     private EditText editpassword;
     static final int PICK_NEW_USER = 1;
+
+    public SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
+        db = usdbh.getWritableDatabase();
+        if(db == null)
+        {
+            finish();
+        }
 
         btnLogin = findViewById(R.id.btn_login);
         btnCreate = findViewById(R.id.btn_create);
@@ -42,18 +52,29 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = edituser.getText().toString();
-                password = editpassword.getText().toString();
+                
+                String struser = edituser.getText().toString();
+                String strpass = editpassword.getText().toString();
+                
+                String[] campos = new String[] {"Usuario", "Contraseña"};
+                String[] args = new String[] {struser, strpass};
+                Cursor c = db.query("Usuarios", campos, "Usuario=? AND Contraseña=?", args, null, null, null);
 
-                if(username.equals(validUser) && password.equals(validPass))
+
+                if(c.getCount() == 1)
                 {
                     Toast.makeText(Login.this,R.string.ingresando,Toast.LENGTH_SHORT).show();
                     Intent toMain = new Intent().setClass(Login.this, MainActivity.class);
+                    toMain.putExtra("User", struser);
                     startActivity(toMain);
+                }
+                else if(c.getCount() == 0)
+                {
+                    Toast.makeText(Login.this, R.string.wronguser, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(Login.this, R.string.wronguser, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Error en base de datos. Consultar servicio tecnico.", Toast.LENGTH_SHORT).show();
                 }
 
             }

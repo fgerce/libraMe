@@ -2,6 +2,7 @@ package com.fede.librame;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,25 +72,47 @@ public class CreateUser extends AppCompatActivity {
                 }
                 else
                 {
-                    AddUserDB(editUser.getText().toString(), editPassword.getText().toString(),editMail.getText().toString());
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result",editUser.getText().toString());
-                    setResult(Login.RESULT_OK, returnIntent);
-                    finish();
+                    if(AddUserDB(editUser.getText().toString(), editPassword.getText().toString(),editMail.getText().toString()) == 0)
+                    {
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("result",editUser.getText().toString());
+                        setResult(Login.RESULT_OK, returnIntent);
+                        finish();
+                    }
+                    else
+                    {
+                        editUser.setText("");
+                        editMail.setText("");
+                        editPassword.setText("");
+                    }
+
                 }
 
             }
         });
     }
 
-    private void AddUserDB(String struser, String strpass, String stremail)
+    private int AddUserDB(String struser, String strpass, String stremail)
     {
-        ContentValues nuevoRegistro = new ContentValues();
-        nuevoRegistro.put("Usuario", struser);
-        nuevoRegistro.put("Email", stremail);
-        nuevoRegistro.put("Contraseña", strpass);
+        String[] campos = new String[] {"Usuario", "Email"};
+        String[] args = new String[] {struser, stremail};
+        Cursor c = db.query("Usuarios", campos, "Usuario=? OR Email=?", args, null, null, null);
 
-        db.insert("Usuarios", null, nuevoRegistro);
+        if(c.getCount() > 0)
+        {
+            Toast.makeText(this, "Usuario/Email ya existente", Toast.LENGTH_SHORT).show();
+            return c.getCount();
+        }
+        else
+        {
+            ContentValues nuevoRegistro = new ContentValues();
+            nuevoRegistro.put("Usuario", struser);
+            nuevoRegistro.put("Email", stremail);
+            nuevoRegistro.put("Contraseña", strpass);
+            db.insert("Usuarios", null, nuevoRegistro);
+            Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
+            return 0;
+        }
     }
     public static boolean isEmailValid(String email)
     {

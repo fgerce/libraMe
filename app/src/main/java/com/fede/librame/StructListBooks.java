@@ -8,6 +8,7 @@ public class StructListBooks {
     private URI rutaportada;
     private String genero;
     private String descripcion;
+    private Integer ISBN;
 
     public StructListBooks(String titulo, String desc, String genero,URI rutaimagen) {
         this.titulo=titulo;
