@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public ListView listBooks;
     public Toolbar toolbar;
     public String userlog;
-    public FloatingActionButton AddButton;
+    public FloatingActionButton AddButton, RefreshButton;
     public SQLiteDatabase db;
 
     static final int PICK_NEW_BOOK = 1;
@@ -34,14 +36,21 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        AddButton = (FloatingActionButton) findViewById(R.id.floatingAddButton);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        AddButton = findViewById(R.id.floatingAddButton);
+        RefreshButton = findViewById(R.id.floatingRefreshButton);
+        toolbar = findViewById(R.id.toolbar);
         userlog = getIntent().getExtras().getString("User"," ");
         toolbar.setTitle("Hola " + userlog);
         toolbar.setSubtitle(getResources().getString(R.string.menuseleccion));
         toolbar.inflateMenu(R.menu.toolbar_menu);
-        listBooks = (ListView)findViewById(R.id.listBooks);
+        listBooks = findViewById(R.id.listBooks);
 
+        try{
+            RefreshList();
+        }catch (Exception e)
+        {
+            Toast.makeText(this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+        }
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -65,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        RefreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    RefreshList();
+                }catch (Exception e)
+                {
+                    Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -73,45 +94,42 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PICK_NEW_BOOK) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-
+                try{
+                    RefreshList();
+                }catch (Exception e)
+                {
+                    Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+                }
             }
             else
             {
-
+                Toast.makeText(this, "Solicitar tecnico, problema en newbook", Toast.LENGTH_SHORT).show();
             }
         }
-        else
-        {
-
-        }
     }
-/*
-    //Hay que hacer esta funcion...
+
     public void RefreshList()
     {
-        String selectQuery = "SELECT * FROM " + "libros";
+        String allQuery = "SELECT * FROM " + "libros";
+        Cursor cursor = db.rawQuery(allQuery, null);
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        StructListBooks[] data = new StructListBooks[cursor.getCount()];
+        int i = 0;
 
         if (cursor.moveToFirst()) {
             //Loop through the table rows
             do {
-
+                data[i] = new StructListBooks(cursor.getString(cursor.getColumnIndex("Titulo")), cursor.getString(cursor.getColumnIndex("Genero")));
+                i++;
             } while (cursor.moveToNext());
+            i=0;
+            AdaptadorLibros adaptador =
+                    new AdaptadorLibros(this, data);
+
+            listBooks.setAdapter(adaptador);
         }
-        final StructListBooks[] datos =
-                new StructListBooks[]{
-                        new StructListBooks("Título 1", "Subtítulo largo 1"),
-                        new StructListBooks("Título 2", "Subtítulo largo 2"),
-                        new StructListBooks("Título 3", "Subtítulo largo 3"),
-                        new StructListBooks("Título 4", "Subtítulo largo 4"),
-                        //...
-                        new StructListBooks("Título 15", "Subtítulo largo 15")};
-
-        AdaptadorLibros adaptador =
-                new AdaptadorLibros(this, datos);
-
-        listBooks.setAdapter(adaptador);
     }
-*/
+
+
+
 }

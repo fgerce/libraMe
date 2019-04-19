@@ -25,7 +25,6 @@ public class newbook extends AppCompatActivity {
     public SQLiteDatabase db;
 
     static final int CANCELADO = 1;
-    static final int CARGA_OK = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +89,12 @@ public class newbook extends AppCompatActivity {
                     String Editorial = editEditorial.getText().toString();
                     String Fecha = editFecha.getText().toString();
                     float Precio = Float.valueOf(editPrecio.getText().toString());
-                    int retorno;
 
-                    //Aca hay que revisar que los campos esten correctos...
+                    //Aca falta revisar que los campos esten correctos...
 
-                    retorno = AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio);
-                    if(retorno == CARGA_OK) {
+                    if(AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio) == RESULT_OK) {
                         Intent returnIntent = new Intent();
-                        setResult(retorno, returnIntent);
+                        setResult(RESULT_OK, returnIntent);
                         finish();
                     }
                     else
@@ -145,7 +142,7 @@ public class newbook extends AppCompatActivity {
             db.insert("libros", null, nuevoRegistro);
             Toast.makeText(this, "Libro agregado correctamente", Toast.LENGTH_SHORT).show();
             c.close();
-            return CARGA_OK;
+            return RESULT_OK;
         }
     }
 }
