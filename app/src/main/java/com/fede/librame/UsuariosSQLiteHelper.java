@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
 
     //Sentencia SQL para crear la tabla de Usuarios
-    String sqlCreate = "CREATE TABLE usuarios (ID INTEGER PRIMARY KEY AUTOINCREMENT, Usuario TEXT unique, Email TEXT unique, Contraseña TEXT)";
+    private String sqlCreate = "CREATE TABLE usuarios (ID INTEGER PRIMARY KEY AUTOINCREMENT, Usuario TEXT unique, Email TEXT unique, Contraseña TEXT)";
 
-    String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER PRIMARY KEY unique, ISBN10 INTEGER unique, " +
-                        "Autor TEXT, Edicion INTEGER, Encuadernacion TEXT, Editorial TEXT, Fecha TEXT, Precio REAL)";
+    private String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER, ISBN10 INTEGER, Titulo TEXT," +
+                        "Autor TEXT, Genero TEXT, Descripcion TEXT, Edicion INTEGER, Encuadernacion TEXT, Editorial TEXT, Fecha TEXT, " +
+                        "Precio REAL, Rutaportada TEXT)";
+
 
     public UsuariosSQLiteHelper(Context contexto, String nombre, SQLiteDatabase.CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);

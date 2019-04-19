@@ -101,7 +101,9 @@ public class CreateUser extends AppCompatActivity {
         if(c.getCount() > 0)
         {
             Toast.makeText(this, "Usuario/Email ya existente", Toast.LENGTH_SHORT).show();
-            return c.getCount();
+            int aux = c.getCount();
+            c.close();
+            return aux;
         }
         else
         {
@@ -109,8 +111,9 @@ public class CreateUser extends AppCompatActivity {
             nuevoRegistro.put("Usuario", struser);
             nuevoRegistro.put("Email", stremail);
             nuevoRegistro.put("Contraseña", strpass);
-            db.insert("Usuarios", null, nuevoRegistro);
+            db.insert("usuarios", null, nuevoRegistro);
             Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
+            c.close();
             return 0;
         }
     }

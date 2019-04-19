@@ -1,6 +1,8 @@
 package com.fede.librame;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public String userlog;
     public FloatingActionButton AddButton;
+    public SQLiteDatabase db;
 
     static final int PICK_NEW_BOOK = 1;
 
@@ -24,28 +27,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
+        db = usdbh.getWritableDatabase();
+        if(db == null)
+        {
+            finish();
+        }
+
         AddButton = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         userlog = getIntent().getExtras().getString("User"," ");
         toolbar.setTitle("Hola " + userlog);
         toolbar.setSubtitle(getResources().getString(R.string.menuseleccion));
         toolbar.inflateMenu(R.menu.toolbar_menu);
-
-        final StructListBooks[] datos =
-                new StructListBooks[]{
-                        new StructListBooks("Título 1", "Subtítulo largo 1"),
-                        new StructListBooks("Título 2", "Subtítulo largo 2"),
-                        new StructListBooks("Título 3", "Subtítulo largo 3"),
-                        new StructListBooks("Título 4", "Subtítulo largo 4"),
-                        //...
-                        new StructListBooks("Título 15", "Subtítulo largo 15")};
-
-        AdaptadorLibros adaptador =
-                new AdaptadorLibros(this, datos);
-
         listBooks = (ListView)findViewById(R.id.listBooks);
 
-        listBooks.setAdapter(adaptador);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -89,4 +85,33 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+/*
+    //Hay que hacer esta funcion...
+    public void RefreshList()
+    {
+        String selectQuery = "SELECT * FROM " + "libros";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            //Loop through the table rows
+            do {
+
+            } while (cursor.moveToNext());
+        }
+        final StructListBooks[] datos =
+                new StructListBooks[]{
+                        new StructListBooks("Título 1", "Subtítulo largo 1"),
+                        new StructListBooks("Título 2", "Subtítulo largo 2"),
+                        new StructListBooks("Título 3", "Subtítulo largo 3"),
+                        new StructListBooks("Título 4", "Subtítulo largo 4"),
+                        //...
+                        new StructListBooks("Título 15", "Subtítulo largo 15")};
+
+        AdaptadorLibros adaptador =
+                new AdaptadorLibros(this, datos);
+
+        listBooks.setAdapter(adaptador);
+    }
+*/
 }
