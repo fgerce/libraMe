@@ -89,6 +89,8 @@ public class Login extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String result=data.getStringExtra("result");
                 edituser.setText(result);
+                editpassword.setText("");
+                editpassword.requestFocus();
             }
 
             if (resultCode == CreateUser.NO_USER) {

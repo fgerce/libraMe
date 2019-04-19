@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     public String userlog;
     public FloatingActionButton AddButton;
 
+    static final int PICK_NEW_BOOK = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +64,29 @@ public class MainActivity extends AppCompatActivity {
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toNewBook = new Intent().setClass(MainActivity.this, Login.class);
-                startActivity(toNewBook);
+                Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
+                startActivityForResult(toNewBook,PICK_NEW_BOOK);
             }
         });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == PICK_NEW_BOOK) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+
+        }
+    }
 }

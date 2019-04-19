@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backpattern"
     tools:context=".CreateUser">
 
     <android.support.constraint.Guideline
@@ -23,7 +24,7 @@
         android:text="@string/User"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
         android:text="@string/Newuser"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorTitles"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtUser"
@@ -61,7 +62,7 @@
         android:text="@string/Password"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +80,7 @@
         android:text="@string/email"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +97,7 @@
         android:inputType="text"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorHints"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +114,7 @@
         android:inputType="textPassword"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorHints"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +132,7 @@
         android:inputType="textEmailAddress"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorHints"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,20 +140,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUser3" />
 
-    <Button
-        android:id="@+id/btn_create"
-        android:layout_width="161dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:drawableStart="@drawable/ic_create_account"
-        android:text="@string/SignUp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
-    <Button
+    <com.manojbhadane.QButton
         android:id="@+id/btn_back"
         android:layout_width="141dp"
         android:layout_height="wrap_content"
@@ -163,6 +152,37 @@
         android:text="@string/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_create" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_create"
+        android:drawablePadding="1dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:qb_backgroundColor="@color/colorTitles"
+        app:qb_radius="50"
+        app:qb_strokeColor="@color/colorTitles"
+        app:qb_strokeWidth="10" />
+
+    <com.manojbhadane.QButton
+        android:id="@+id/btn_create"
+        android:layout_width="217dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/ic_create_account_white"
+        android:drawablePadding="1dp"
+        android:text="@string/SignUp"
+        android:textAlignment="center"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail"
+        app:qb_backgroundColor="@color/colorTitles"
+        app:qb_radius="50"
+        app:qb_strokeColor="@color/colorTitles"
+        app:qb_strokeWidth="10" />
 
 </android.support.constraint.ConstraintLayout>

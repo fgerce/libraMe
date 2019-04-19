@@ -9,7 +9,7 @@ public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
     //Sentencia SQL para crear la tabla de Usuarios
     String sqlCreate = "CREATE TABLE usuarios (ID INTEGER PRIMARY KEY AUTOINCREMENT, Usuario TEXT unique, Email TEXT unique, Contraseña TEXT)";
 
-    String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER PRIMARY KEY unique, ISBN10 INTEGER PRIMARY KEY unique, " +
+    String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER PRIMARY KEY unique, ISBN10 INTEGER unique, " +
                         "Autor TEXT, Edicion INTEGER, Encuadernacion TEXT, Editorial TEXT, Fecha TEXT, Precio REAL)";
 
     public UsuariosSQLiteHelper(Context contexto, String nombre, SQLiteDatabase.CursorFactory factory, int version) {
