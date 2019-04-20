@@ -150,14 +150,14 @@
         app:qb_strokeWidth="10" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkStayLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:checked="true"
-        android:text="@string/staylog"
+        android:checked="false"
+        android:text="@string/rememberuser"
         android:textColor="@color/colorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +176,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkStayLog" />
 
     <TextView
         android:id="@+id/editForgot"

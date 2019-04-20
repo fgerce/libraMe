@@ -1,13 +1,16 @@
 package com.fede.librame;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +24,8 @@ public class Login extends AppCompatActivity {
 
     private EditText edituser;
     private EditText editpassword;
+    private CheckBox checkStayLog;
+
     static final int PICK_NEW_USER = 1;
 
     public SQLiteDatabase db;
@@ -29,17 +34,36 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
-        db = usdbh.getWritableDatabase();
-        if(db == null)
+        try {
+            UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe", null, 1);
+            db = usdbh.getWritableDatabase();
+            if (db == null) {
+                finish();
+            }
+        }catch (Exception e)
         {
-            finish();
+            Toast.makeText(this, "Error en carga de base de datos - Consulte servicio", Toast.LENGTH_SHORT).show();
         }
 
         btnLogin = findViewById(R.id.btn_login);
         btnCreate = findViewById(R.id.btn_create);
         edituser = findViewById(R.id.editUser);
         editpassword = findViewById(R.id.editPassword);
+        checkStayLog = findViewById(R.id.checkStayLog);
+
+        try{
+            SharedPreferences prefs =
+                    getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
+            String tmpuser = prefs.getString("User", "");
+            String tmppass = prefs.getString("Pass", "");
+            Boolean stateCheck = prefs.getBoolean("stateCheck", false);
+            edituser.setText(tmpuser.toString());
+            editpassword.setText(tmppass.toString());
+            checkStayLog.setChecked(stateCheck);
+        }catch (Exception e){
+
+        }
+
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +84,30 @@ public class Login extends AppCompatActivity {
                 String[] args = new String[] {struser, strpass};
                 Cursor c = db.query("Usuarios", campos, "Usuario=? AND Contraseña=?", args, null, null, null);
 
-
                 if(c.getCount() == 1)
                 {
+                    if(checkStayLog.isChecked()) {
+                        SharedPreferences prefs =
+                                getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("User", struser);
+                        editor.putString("Pass", strpass);
+                        editor.putBoolean("stateCheck", true);
+                        editor.commit();
+                    }
+                    else
+                    {
+                        SharedPreferences prefs =
+                                getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("User", "");
+                        editor.putString("Pass", "");
+                        editor.putBoolean("stateCheck", false);
+                        editor.commit();
+                    }
+
                     Toast.makeText(Login.this,R.string.ingresando,Toast.LENGTH_SHORT).show();
                     Intent toMain = new Intent().setClass(Login.this, MainActivity.class);
                     toMain.putExtra("User", struser);

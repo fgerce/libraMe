@@ -18,10 +18,11 @@ public class StructListBooks {
     private Date fechapublicacion;
     private Integer precio;
     private URI rutaportada;
+    private String usuario;
 
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
-                           String editorial, Date fechapublicacion, Integer precio, URI rutaportada) {
+                           String editorial, Date fechapublicacion, Integer precio, URI rutaportada, String usuario) {
         this.ISBN13 = ISBN13;
         this.ISBN10 = ISBN10;
         this.titulo=titulo;
@@ -34,10 +35,11 @@ public class StructListBooks {
         this.fechapublicacion = fechapublicacion;
         this.precio = precio;
         this.rutaportada=rutaportada;
+        this.usuario=usuario;
     }
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
-                           String editorial, Date fechapublicacion, Integer precio) {
+                           String editorial, Date fechapublicacion, Integer precio, String usuario) {
         this.ISBN13 = ISBN13;
         this.ISBN10 = ISBN10;
         this.titulo=titulo;
@@ -49,12 +51,14 @@ public class StructListBooks {
         this.editorial = editorial;
         this.fechapublicacion = fechapublicacion;
         this.precio = precio;
+        this.usuario=usuario;
     }
 
-    public StructListBooks(String titulo, String desc, String genero) {
+    public StructListBooks(String titulo, String genero, String autor)
+    {
         this.titulo=titulo;
         this.genero=genero;
-        this.descripcion=desc;
+        this.autor=autor;
     }
 
     public StructListBooks(String titulo, String genero) {
@@ -105,5 +109,10 @@ public class StructListBooks {
 
     public String getEditorial() {
         return editorial;
+    }
+
+    public String getUsuario()
+    {
+        return usuario;
     }
 }

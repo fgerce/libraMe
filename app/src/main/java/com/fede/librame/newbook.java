@@ -23,13 +23,14 @@ public class newbook extends AppCompatActivity {
     public EditText editISBN13, editISBN10, editTitulo, editAutor, editGenero, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio;
     public Button btnCancel, btnNew;
     public SQLiteDatabase db;
-
+    public String userlog;
     static final int CANCELADO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newbook);
+        userlog = getIntent().getExtras().getString("User","Public");
 
         UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
         db = usdbh.getWritableDatabase();
@@ -81,7 +82,7 @@ public class newbook extends AppCompatActivity {
                     int ISBN13 = Integer.valueOf(editISBN13.getText().toString());
                     int ISBN10 = Integer.valueOf(editISBN10.getText().toString());
                     String Titulo = editTitulo.getText().toString();
-                    String Autor = editTitulo.getText().toString();
+                    String Autor = editAutor.getText().toString();
                     String Genero = editGenero.getText().toString();
                     String Desc = editDescripcion.getText().toString();
                     int Edicion = Integer.valueOf(editEdicion.getText().toString());
@@ -89,6 +90,7 @@ public class newbook extends AppCompatActivity {
                     String Editorial = editEditorial.getText().toString();
                     String Fecha = editFecha.getText().toString();
                     float Precio = Float.valueOf(editPrecio.getText().toString());
+
 
                     //Aca falta revisar que los campos esten correctos...
 
@@ -113,10 +115,10 @@ public class newbook extends AppCompatActivity {
 
     private int AddBookDB(int ISBN13, int ISBN10, String Titulo, String Autor, String Genero, String Descripcion, int Edicion, String Encuadernacion, String Editorial, String Fecha, float Precio)
     {
-        String[] campos = new String[] {"Titulo", "Autor", "Edicion"};
-        String[] args = new String[] {Titulo, Autor, String.valueOf(Edicion)};
+        String[] campos = new String[] {"Titulo", "Autor", "Edicion", "Usuario"};
+        String[] args = new String[] {Titulo, Autor, String.valueOf(Edicion), userlog};
 
-        Cursor c = db.query("libros", campos, "Titulo=? AND Autor=? AND Edicion=?", args, null, null, null);
+        Cursor c = db.query("libros", campos, "Titulo=? AND Autor=? AND Edicion=? AND Usuario=?", args, null, null, null);
 
         if(c.getCount() > 0)
         {
@@ -139,6 +141,7 @@ public class newbook extends AppCompatActivity {
             nuevoRegistro.put("Fecha", Fecha);
             nuevoRegistro.put("Precio", Precio);
             nuevoRegistro.put("Rutaportada", "");
+            nuevoRegistro.put("Usuario", userlog.toString());
             db.insert("libros", null, nuevoRegistro);
             Toast.makeText(this, "Libro agregado correctamente", Toast.LENGTH_SHORT).show();
             c.close();

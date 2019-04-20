@@ -45,12 +45,11 @@ public class SplashScreen extends AppCompatActivity {
     {
         UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe.db", null, 1);
         //Open your local db as the input stream
-        InputStream myInput = SplashScreen.this.getAssets().open("libraMe.db");
-
+        InputStream myInput = getApplicationContext().getAssets().open("libraMe.db");
         // Path to the just created empty db
-        String outFileName = "/data/data/com.fede.librame/databases/libraMe.db";
-        // String outFileName = context.getDatabasePath("Manatab").getPath();
-        //Open the empty db as the output stream
+
+        String outFileName = getApplicationContext().getDatabasePath("libraMe").getAbsolutePath();
+
         OutputStream myOutput = new FileOutputStream(outFileName);
 
         //transfer bytes from the inputfile to the outputfile

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
+                toNewBook.putExtra("User", userlog.toString());
                 startActivityForResult(toNewBook,PICK_NEW_BOOK);
             }
         });
@@ -101,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
                 }
             }
+            else if(resultCode == newbook.CANCELADO)
+            {
+
+            }
             else
             {
                 Toast.makeText(this, "Solicitar tecnico, problema en newbook", Toast.LENGTH_SHORT).show();
@@ -110,8 +115,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void RefreshList()
     {
+        /*
         String allQuery = "SELECT * FROM " + "libros";
         Cursor cursor = db.rawQuery(allQuery, null);
+        */
+        String[] campos = new String[] {"Usuario", "Titulo", "Genero", "Autor"};
+        String[] args = new String[] {userlog.toString()};
+
+        Cursor cursor = db.query("libros", campos, "Usuario=?", args, null, null, null);
 
         StructListBooks[] data = new StructListBooks[cursor.getCount()];
         int i = 0;
@@ -119,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             //Loop through the table rows
             do {
-                data[i] = new StructListBooks(cursor.getString(cursor.getColumnIndex("Titulo")), cursor.getString(cursor.getColumnIndex("Genero")));
+                data[i] = new StructListBooks("Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
+                                                "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
+                                                "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")));
                 i++;
             } while (cursor.moveToNext());
             i=0;

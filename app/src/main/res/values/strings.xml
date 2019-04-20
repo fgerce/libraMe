@@ -6,7 +6,7 @@
     <string name="SignUp">Nuevo usuario</string>
     <string name="Noaccount">¿No tienes cuenta?</string>
     <string name="Forgotpass">Olvidé mi contraseña</string>
-    <string name="staylog">Mantenerme logueado</string>
+    <string name="rememberuser">Recordar usuario</string>
     <string name="ingreso">Ingreso al sistema</string>
     <string name="back">Atrás</string>
     <string name="End">Finalizar</string>
