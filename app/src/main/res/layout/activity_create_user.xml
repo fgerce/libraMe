@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backpattern"
+    android:background="@color/backgroundcolor"
     tools:context=".CreateUser">
 
     <android.support.constraint.Guideline
@@ -12,24 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
-
-    <TextView
-        android:id="@+id/txtUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="monospace"
-        android:text="@string/User"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -39,94 +22,58 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:fontFamily="serif"
+        android:fontFamily="sans-serif-light"
         android:text="@string/Newuser"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorTitles"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtUser"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtUser2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="monospace"
-        android:text="@string/Password"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUser" />
-
-    <TextView
-        android:id="@+id/txtUser3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="monospace"
-        android:text="@string/email"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <EditText
         android:id="@+id/editUser"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/User"
         android:inputType="text"
         android:textAlignment="textStart"
-        android:textColor="@color/colorHintsText"
+        android:textColor="@color/colorTextEdits"
         android:textColorHint="@color/colorHints"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUser" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <EditText
         android:id="@+id/editPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/Password"
         android:inputType="textPassword"
         android:textAlignment="textStart"
-        android:textColor="@color/colorHintsText"
+        android:textColor="@color/colorTextEdits"
         android:textColorHint="@color/colorHints"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUser2" />
+        app:layout_constraintTop_toBottomOf="@+id/editUser" />
 
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -138,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUser3" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
 
     <com.manojbhadane.QButton
@@ -146,21 +93,21 @@
         android:layout_width="141dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:drawableStart="@android:drawable/ic_menu_revert"
-        android:text="@string/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_create"
         android:drawablePadding="1dp"
+        android:text="@string/back"
         android:textAlignment="center"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:qb_backgroundColor="@color/colorTitles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_create"
+        app:qb_backgroundColor="@color/backgroundbutton"
         app:qb_radius="50"
-        app:qb_strokeColor="@color/colorTitles"
+        app:qb_strokeColor="@color/backgroundbutton"
         app:qb_strokeWidth="10" />
 
     <com.manojbhadane.QButton
@@ -168,9 +115,9 @@
         android:layout_width="217dp"
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:drawableStart="@drawable/ic_create_account_white"
+        android:drawableStart="@drawable/ic_create_account"
         android:drawablePadding="1dp"
         android:text="@string/SignUp"
         android:textAlignment="center"
@@ -180,9 +127,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmail"
-        app:qb_backgroundColor="@color/colorTitles"
+        app:qb_backgroundColor="@color/backgroundbutton"
         app:qb_radius="50"
-        app:qb_strokeColor="@color/colorTitles"
+        app:qb_strokeColor="@color/backgroundbutton"
         app:qb_strokeWidth="10" />
 
 </android.support.constraint.ConstraintLayout>

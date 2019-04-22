@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor">
 
     <TextView
         android:id="@+id/txtGenerosSpinner"
@@ -14,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:text="Generos"
         android:textAlignment="center"
-        android:textColor="@color/colorHintsText"
+        android:textColor="@color/colorTextEdits"
         android:textColorHint="@color/colorHints"
         android:textSize="16sp"
         android:textStyle="bold"

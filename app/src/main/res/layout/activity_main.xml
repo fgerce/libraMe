@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backpattern"
+    android:background="@color/backgroundcolor"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -37,10 +37,10 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        app:backgroundTint="@color/ic_launcher_background"
+        app:backgroundTint="@color/secondaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="@color/colorAccent"
+        app:rippleColor="@color/secondaryLightColor"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
 
@@ -51,10 +51,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        app:backgroundTint="@color/ic_launcher_background"
+        app:backgroundTint="@color/secondaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/colorAccent"
+        app:rippleColor="@color/secondaryLightColor"
         app:srcCompat="@drawable/ic_sync" />
 
     <android.support.design.widget.FloatingActionButton
@@ -64,11 +64,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        app:backgroundTint="@color/ic_launcher_background"
+        app:backgroundTint="@color/secondaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/colorAccent"
+        app:rippleColor="@color/secondaryLightColor"
         app:srcCompat="@drawable/ic_barcode" />
 
 

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#999999</color>
-    <color name="colorAccent">#F1C206</color>
+    <color name="primaryColor">#0d47a1</color>
+    <color name="primaryLightColor">#5472d3</color>
+    <color name="primaryDarkColor">#002171</color>
+    <color name="secondaryColor">#fafafa</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#c7c7c7</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
 
-
-    <color name="colorTitles">#000000</color>
-    <color name="colorText">#b2001c</color>
-    <color name="colorHints">#827717</color>
+    <color name="backgroundcolor">#002171</color>
+    <color name="colorTitles">#ffffff</color>
+    <color name="colorText">#ffffff</color>
+    <color name="colorHints">#5472d3</color>
     <color name="colorHintsText">#2196F3</color>
+    <color name="backgroundbutton">#5472d3</color>
+    <color name="colorTextEdits">#c7c7c7</color>
+    <color name="backfloatingbuttons">#c7c7c7</color>
 
 </resources>
