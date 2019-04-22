@@ -7,12 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     public String userlog;
     public FloatingActionButton AddButton, RefreshButton;
     public SQLiteDatabase db;
+
+    public fetchBooks busqueda = new fetchBooks("OL3700132M");
 
     static final int PICK_NEW_BOOK = 1;
 
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         String allQuery = "SELECT * FROM " + "libros";
         Cursor cursor = db.rawQuery(allQuery, null);
         */
-        String[] campos = new String[] {"Usuario", "Titulo", "Genero", "Autor"};
+        String[] campos = new String[] {"Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas"};
         String[] args = new String[] {userlog.toString()};
 
         Cursor cursor = db.query("libros", campos, "Usuario=?", args, null, null, null);
@@ -132,7 +134,10 @@ public class MainActivity extends AppCompatActivity {
             do {
                 data[i] = new StructListBooks("Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
                                                 "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
-                                                "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")));
+                                                "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")),
+                                                "Fecha: " + cursor.getString(cursor.getColumnIndex("Fecha")),
+                                                "Paginas: " + String.valueOf(cursor.getInt(cursor.getColumnIndex("Paginas")))
+                );
                 i++;
             } while (cursor.moveToNext());
             i=0;
@@ -142,7 +147,4 @@ public class MainActivity extends AppCompatActivity {
             listBooks.setAdapter(adaptador);
         }
     }
-
-
-
 }

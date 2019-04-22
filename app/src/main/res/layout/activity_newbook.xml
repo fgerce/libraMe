@@ -82,14 +82,17 @@
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
-    <EditText
-        android:id="@+id/editGenero"
+    <Spinner
+        android:id="@+id/spinnerGenero"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="@string/Genero"
         android:inputType="text"
+        android:prompt="@string/Genero"
+        android:spinnerMode="dialog"
         android:textAlignment="center"
         android:textColor="@color/colorHintsText"
         android:textColorHint="@color/colorHints"
@@ -99,7 +102,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editDescripcion"
@@ -233,6 +237,25 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/guideline13" />
+
+    <EditText
+        android:id="@+id/editPaginas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/Paginas"
+        android:inputType = "number"
+        android:textAlignment="center"
+        android:textColor="@color/colorHintsText"
+        android:textColorHint="@color/colorHints"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
 
     <TextView
@@ -481,6 +504,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
+    <TextView
+        android:id="@+id/txtPaginas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="monospace"
+        android:text="@string/Paginas"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline14" />
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineMidVertical"
@@ -589,13 +631,19 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.84" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90" />
+
 
     <com.manojbhadane.QButton
         android:id="@+id/btnAdd"
         android:layout_width="127dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:drawableStart="@android:drawable/ic_input_add"
         android:drawablePadding="1dp"
@@ -606,7 +654,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineMidVertical"
-        app:layout_constraintTop_toTopOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline15"
         app:qb_backgroundColor="@color/colorTitles"
         app:qb_radius="50"
         app:qb_strokeColor="@color/colorTitles"
@@ -617,7 +665,6 @@
         android:layout_width="141dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
         android:drawablePadding="1dp"
@@ -629,11 +676,12 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineMidVertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_create"
-        app:layout_constraintTop_toTopOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline15"
         app:qb_backgroundColor="@color/colorTitles"
         app:qb_radius="50"
         app:qb_strokeColor="@color/colorTitles"
         app:qb_strokeWidth="10" />
+
 
 
 </android.support.constraint.ConstraintLayout>

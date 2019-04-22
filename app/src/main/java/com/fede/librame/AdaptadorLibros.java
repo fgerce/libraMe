@@ -30,6 +30,12 @@ public class AdaptadorLibros extends ArrayAdapter<StructListBooks> {
         TextView lblGenero = item.findViewById(R.id.lbl_genero);
         lblGenero.setText(datos[posicion].getGenero());
 
+        TextView lblFecha = item.findViewById(R.id.lbl_fecha);
+        lblFecha.setText(datos[posicion].getFechapublicacion());
+
+        TextView lblPaginas = item.findViewById(R.id.lbl_paginas);
+        lblPaginas.setText(datos[posicion].getPaginas());
+
 
         return(item);
     }

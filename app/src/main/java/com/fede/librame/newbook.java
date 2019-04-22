@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +20,15 @@ import java.net.URI;
 
 public class newbook extends AppCompatActivity {
 
-    public TextView txtISBN13, txtISBN10,txtTitulo,txtAutor,txtGenero,txtDescripcion,txtEdicion, txtEncuadernacion, txtEditorial, txtFecha, txtPrecio;
-    public EditText editISBN13, editISBN10, editTitulo, editAutor, editGenero, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio;
+    public TextView txtISBN13, txtISBN10,txtTitulo,txtAutor,txtGenero,txtDescripcion,txtEdicion, txtEncuadernacion, txtEditorial, txtFecha, txtPrecio, txtPaginas;
+    public EditText editISBN13, editISBN10, editTitulo, editAutor, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio, editPaginas;
+    public Spinner spinnerGenero;
     public Button btnCancel, btnNew;
     public SQLiteDatabase db;
     public String userlog;
     static final int CANCELADO = 1;
 
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newbook);
@@ -51,19 +53,23 @@ public class newbook extends AppCompatActivity {
         txtEditorial = findViewById(R.id.txtEditorial);
         txtFecha = findViewById(R.id.txtFecha);
         txtPrecio = findViewById(R.id.txtPrecio);
+        txtPaginas = findViewById(R.id.txtPaginas);
         editISBN13 = findViewById(R.id.editISBN13);
         editISBN10 = findViewById(R.id.editISBN10);
         editTitulo = findViewById(R.id.editTitulo);
         editAutor = findViewById(R.id.editAutor);
-        editGenero = findViewById(R.id.editGenero);
+        spinnerGenero = findViewById(R.id.spinnerGenero);
         editDescripcion = findViewById(R.id.editDescripcion);
         editEdicion = findViewById(R.id.editEdicion);
         editEncuadernacion = findViewById(R.id.editEncuadernacion);
         editEditorial = findViewById(R.id.editEditorial);
         editFecha = findViewById(R.id.editFecha);
         editPrecio = findViewById(R.id.editPrecio);
+        editPaginas = findViewById(R.id.editPaginas);
         btnCancel = findViewById(R.id.btnCancel);
         btnNew = findViewById(R.id.btnAdd);
+
+        spinnerGenero.setAdapter(new SpinnerAdapterGeneros(this, R.layout.spinner, getResources().getStringArray(R.array.listGeneros)));
 
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -83,18 +89,18 @@ public class newbook extends AppCompatActivity {
                     int ISBN10 = Integer.valueOf(editISBN10.getText().toString());
                     String Titulo = editTitulo.getText().toString();
                     String Autor = editAutor.getText().toString();
-                    String Genero = editGenero.getText().toString();
+                    String Genero = spinnerGenero.getSelectedItem().toString();
                     String Desc = editDescripcion.getText().toString();
                     int Edicion = Integer.valueOf(editEdicion.getText().toString());
                     String Encuadernacion = editEncuadernacion.getText().toString();
                     String Editorial = editEditorial.getText().toString();
                     String Fecha = editFecha.getText().toString();
                     float Precio = Float.valueOf(editPrecio.getText().toString());
-
+                    int Paginas = Integer.valueOf(editPaginas.getText().toString());
 
                     //Aca falta revisar que los campos esten correctos...
 
-                    if(AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio) == RESULT_OK) {
+                    if(AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio, Paginas) == RESULT_OK) {
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);
                         finish();
@@ -113,7 +119,7 @@ public class newbook extends AppCompatActivity {
 
     }
 
-    private int AddBookDB(int ISBN13, int ISBN10, String Titulo, String Autor, String Genero, String Descripcion, int Edicion, String Encuadernacion, String Editorial, String Fecha, float Precio)
+    private int AddBookDB(int ISBN13, int ISBN10, String Titulo, String Autor, String Genero, String Descripcion, int Edicion, String Encuadernacion, String Editorial, String Fecha, float Precio, Integer Paginas)
     {
         String[] campos = new String[] {"Titulo", "Autor", "Edicion", "Usuario"};
         String[] args = new String[] {Titulo, Autor, String.valueOf(Edicion), userlog};
@@ -142,6 +148,7 @@ public class newbook extends AppCompatActivity {
             nuevoRegistro.put("Precio", Precio);
             nuevoRegistro.put("Rutaportada", "");
             nuevoRegistro.put("Usuario", userlog.toString());
+            nuevoRegistro.put("Paginas", Paginas);
             db.insert("libros", null, nuevoRegistro);
             Toast.makeText(this, "Libro agregado correctamente", Toast.LENGTH_SHORT).show();
             c.close();

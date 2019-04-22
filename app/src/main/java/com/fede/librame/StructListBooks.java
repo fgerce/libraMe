@@ -15,14 +15,15 @@ public class StructListBooks {
     private Integer edicion;
     private String encuadernacion;
     private String editorial;
-    private Date fechapublicacion;
+    private String fechapublicacion;
     private Integer precio;
     private URI rutaportada;
     private String usuario;
+    private String paginas;
 
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
-                           String editorial, Date fechapublicacion, Integer precio, URI rutaportada, String usuario) {
+                           String editorial, String fechapublicacion, Integer precio, URI rutaportada, String usuario) {
         this.ISBN13 = ISBN13;
         this.ISBN10 = ISBN10;
         this.titulo=titulo;
@@ -39,7 +40,7 @@ public class StructListBooks {
     }
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
-                           String editorial, Date fechapublicacion, Integer precio, String usuario) {
+                           String editorial, String fechapublicacion, Integer precio, String usuario) {
         this.ISBN13 = ISBN13;
         this.ISBN10 = ISBN10;
         this.titulo=titulo;
@@ -52,6 +53,15 @@ public class StructListBooks {
         this.fechapublicacion = fechapublicacion;
         this.precio = precio;
         this.usuario=usuario;
+    }
+
+    public StructListBooks(String titulo, String genero, String autor, String fecha, String paginas)
+    {
+        this.titulo=titulo;
+        this.genero=genero;
+        this.autor=autor;
+        this.fechapublicacion = fecha;
+        this.paginas = paginas;
     }
 
     public StructListBooks(String titulo, String genero, String autor)
@@ -99,7 +109,7 @@ public class StructListBooks {
         return edicion;
     }
 
-    public Date getFechapublicacion() {
+    public String getFechapublicacion() {
         return fechapublicacion;
     }
 
@@ -114,5 +124,9 @@ public class StructListBooks {
     public String getUsuario()
     {
         return usuario;
+    }
+
+    public String getPaginas() {
+        return paginas;
     }
 }

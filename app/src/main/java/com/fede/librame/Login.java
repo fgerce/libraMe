@@ -107,7 +107,6 @@ public class Login extends AppCompatActivity {
                         editor.putBoolean("stateCheck", false);
                         editor.commit();
                     }
-
                     Toast.makeText(Login.this,R.string.ingresando,Toast.LENGTH_SHORT).show();
                     Intent toMain = new Intent().setClass(Login.this, MainActivity.class);
                     toMain.putExtra("User", struser);
