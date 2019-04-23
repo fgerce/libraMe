@@ -11,7 +11,7 @@ public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
 
     private String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER, ISBN10 INTEGER, Titulo TEXT," +
                         "Autor TEXT, Genero TEXT, Descripcion TEXT, Edicion INTEGER, Encuadernacion TEXT, Editorial TEXT, Fecha TEXT, " +
-                        "Precio REAL, Rutaportada TEXT, Usuario TEXT, Paginas INTEGER)";
+                        "Precio REAL, Rutaportada TEXT, Usuario TEXT, Paginas INTEGER, Estado TEXT, Cantidad INTEGER)";
 
 
     public UsuariosSQLiteHelper(Context contexto, String nombre, SQLiteDatabase.CursorFactory factory, int version) {

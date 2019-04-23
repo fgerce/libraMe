@@ -138,7 +138,7 @@ public class Login extends AppCompatActivity {
             }
 
             if (resultCode == CreateUser.NO_USER) {
-                Toast.makeText(this, "No generado", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "No generado", Toast.LENGTH_SHORT).show();
             }
         }
 

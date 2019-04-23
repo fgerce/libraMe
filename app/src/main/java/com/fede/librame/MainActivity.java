@@ -7,8 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -19,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public ListView listBooks;
     public Toolbar toolbar;
     public String userlog;
-    public FloatingActionButton AddButton, RefreshButton;
+    public FloatingActionButton AddButton;
     public SQLiteDatabase db;
 
     public fetchBooks busqueda = new fetchBooks("OL3700132M");
@@ -39,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         AddButton = findViewById(R.id.floatingAddButton);
-        RefreshButton = findViewById(R.id.floatingRefreshButton);
         toolbar = findViewById(R.id.toolbar);
         userlog = getIntent().getExtras().getString("User"," ");
         toolbar.setTitle("Hola " + userlog);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
         toolbar.setSubtitle(getResources().getString(R.string.menuseleccion));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.colorText));
         toolbar.inflateMenu(R.menu.toolbar_menu);
         listBooks = findViewById(R.id.listBooks);
 
@@ -57,11 +56,18 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.menu_main_setting:
+                switch (menuItem.getItemId()) {
+                    case R.id.setting:
                         Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                         return true;
-
+                    case R.id.sync:
+                        try{
+                            RefreshList();
+                        }catch (Exception e)
+                        {
+                            Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
                     default:
                         return false;
                 }
@@ -77,17 +83,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RefreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    RefreshList();
-                }catch (Exception e)
-                {
-                    Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
     }
 

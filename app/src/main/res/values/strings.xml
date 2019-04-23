@@ -18,7 +18,7 @@
 
 
     <string-array name="listGeneros">
-        <item>Otro</item>
+        <item>Seleccionar Género</item>
         <item>Animales</item>
         <item>Arte</item>
         <item>Autoayuda</item>
@@ -65,19 +65,15 @@
     <string name="Titulo">Título</string>
     <string name="Autor">Autor</string>
     <string name="Genero">Género</string>
-    <string name="Descripcion">Descripción</string>
+    <string name="Descripcion">Breve descripción</string>
     <string name="Edicion">Edición</string>
     <string name="Encuadernacion">Encuadernación</string>
-    <string name="EjEncuadernacion">Tapa dura</string>
     <string name="Editorial">Editorial</string>
-    <string name="Fecha">Fecha</string>
-    <string name="EjFecha">AAAA-MM-DD</string>
-    <string name="Precio">Precio</string>
-    <string name="EjPrecio">Precio (USD)</string>
+    <string name="Fecha">Fecha (AAAAMMDD)</string>
+    <string name="Precio">Precio (USD)</string>
     <string name="nuevolibro">Nuevo libro</string>
     <string name="Cancel">Cancelar</string>
     <string name="Agregar">Agregar</string>
     <string name="Rutaimg">Ruta img</string>
-    <string name="EjDescripcion">Breve descripción</string>
     <string name="Paginas">"Páginas"</string>
 </resources>

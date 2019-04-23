@@ -36,7 +36,6 @@ public class CreateUser extends AppCompatActivity {
             finish();
         }
 
-
         btnBack = findViewById(R.id.btn_back);
         btnCreate = findViewById(R.id.btn_create);
         editPassword = findViewById(R.id.editPassword);

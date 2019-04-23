@@ -20,7 +20,6 @@ import java.net.URI;
 
 public class newbook extends AppCompatActivity {
 
-    public TextView txtISBN13, txtISBN10,txtTitulo,txtAutor,txtGenero,txtDescripcion,txtEdicion, txtEncuadernacion, txtEditorial, txtFecha, txtPrecio, txtPaginas;
     public EditText editISBN13, editISBN10, editTitulo, editAutor, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio, editPaginas;
     public Spinner spinnerGenero;
     public Button btnCancel, btnNew;
@@ -41,19 +40,6 @@ public class newbook extends AppCompatActivity {
             finish();
         }
 
-
-        txtISBN13 = findViewById(R.id.txtISBN13);
-        txtISBN10 = findViewById(R.id.txtISBN10);
-        txtTitulo = findViewById(R.id.txtTitulo);
-        txtAutor  = findViewById(R.id.txtAutor);
-        txtGenero = findViewById(R.id.txtGenero);
-        txtDescripcion = findViewById(R.id.txtDescripcion);
-        txtEdicion = findViewById(R.id.txtEdicion);
-        txtEncuadernacion = findViewById(R.id.txtEncuadernacion);
-        txtEditorial = findViewById(R.id.txtEditorial);
-        txtFecha = findViewById(R.id.txtFecha);
-        txtPrecio = findViewById(R.id.txtPrecio);
-        txtPaginas = findViewById(R.id.txtPaginas);
         editISBN13 = findViewById(R.id.editISBN13);
         editISBN10 = findViewById(R.id.editISBN10);
         editTitulo = findViewById(R.id.editTitulo);
@@ -70,7 +56,6 @@ public class newbook extends AppCompatActivity {
         btnNew = findViewById(R.id.btnAdd);
 
         spinnerGenero.setAdapter(new SpinnerAdapterGeneros(this, R.layout.spinner, getResources().getStringArray(R.array.listGeneros)));
-
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override

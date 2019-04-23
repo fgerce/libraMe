@@ -9,13 +9,14 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
 
-    <color name="backgroundcolor">#002171</color>
+    <color name="backgroundcolor">#5472d3</color>
     <color name="colorTitles">#ffffff</color>
     <color name="colorText">#ffffff</color>
-    <color name="colorHints">#5472d3</color>
-    <color name="colorHintsText">#2196F3</color>
+    <color name="colorHints">#C7C7C7</color>
+    <color name="colorHintsText">#fafafa</color>
     <color name="backgroundbutton">#5472d3</color>
-    <color name="colorTextEdits">#c7c7c7</color>
-    <color name="backfloatingbuttons">#c7c7c7</color>
+    <color name="colorTextEdits">#fafafa</color>
+    <color name="backfloatingbuttons">#fafafa</color>
+    <color name="backToolbar">#002171</color>
 
 </resources>

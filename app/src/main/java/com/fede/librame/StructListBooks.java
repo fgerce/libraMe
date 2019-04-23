@@ -20,6 +20,8 @@ public class StructListBooks {
     private URI rutaportada;
     private String usuario;
     private String paginas;
+    private String estado;
+    private Integer cantidad;
 
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
@@ -128,5 +130,13 @@ public class StructListBooks {
 
     public String getPaginas() {
         return paginas;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public String getEstado() {
+        return estado;
     }
 }
