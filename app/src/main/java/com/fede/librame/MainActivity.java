@@ -38,16 +38,10 @@ public class MainActivity extends AppCompatActivity {
         final SpeedDialView speedDialView = findViewById(R.id.speedDial);
 
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_add, R.drawable.ic_pen)
-                .setLabel(getString(R.string.manuallyAdd))
-                .setLabelColor(Color.BLACK)
                 .create());
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_search, R.drawable.ic_filesearch)
-                .setLabel(getString(R.string.searchBook))
-                .setLabelColor(Color.BLACK)
                 .create());
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_scan, R.drawable.ic_barcode)
-                .setLabel(getString(R.string.scanBook))
-                .setLabelColor(Color.BLACK)
                 .create());
 
 

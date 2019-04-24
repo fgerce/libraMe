@@ -2,6 +2,7 @@ package com.fede.librame;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -44,22 +45,26 @@ public class fetchBooks {
                                 e.printStackTrace();
                                 continue;
                             }
+                            if(finished == false) {
+                                if (bookJson.has("title")) {
+                                    titulo = bookJson.getString("title");
+                                    Toast.makeText(context, String.valueOf(finished), Toast.LENGTH_SHORT).show();
+                                }
 
-                            titulo = bookJson.has("title") ? bookJson.getString("title") : "";
-                            autor = getAuthor(bookJson);
-                            fechapublicacion = bookJson.has("first_publish_year") ? bookJson.getString("first_publish_year") : "";
+                                autor = getAuthor(bookJson);
+                                fechapublicacion = bookJson.has("first_publish_year") ? bookJson.getString("first_publish_year") : "";
 
-                            if (bookJson.has("cover_edition_key")) {
-                                openLibraryId = bookJson.getString("cover_edition_key");
-                            } else if (bookJson.has("edition_key")) {
-                                final JSONArray ids = bookJson.getJSONArray("edition_key");
-                                openLibraryId = ids.getString(0);
+                                if (bookJson.has("cover_edition_key")) {
+                                    openLibraryId = bookJson.getString("cover_edition_key");
+                                } else if (bookJson.has("edition_key")) {
+                                    final JSONArray ids = bookJson.getJSONArray("edition_key");
+                                    openLibraryId = ids.getString(0);
+                                }
+
+                                if (!(openLibraryId.equals(""))) {
+                                    getDetails(openLibraryId, context);
+                                }
                             }
-
-                            if (!(openLibraryId.equals(""))) {
-                                getDetails(openLibraryId, context);
-                            }
-
                             finished=true;
                         }
                     }

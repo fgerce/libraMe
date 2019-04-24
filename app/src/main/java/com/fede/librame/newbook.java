@@ -66,11 +66,9 @@ public class newbook extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
                 Intent backIntent = new Intent();
                 setResult(CANCELADO, backIntent);
-                finish();*/
-                Refresh();
+                finish();
             }
         });
 
@@ -142,6 +140,8 @@ public class newbook extends AppCompatActivity {
             nuevoRegistro.put("Rutaportada", "");
             nuevoRegistro.put("Usuario", userlog.toString());
             nuevoRegistro.put("Paginas", Paginas);
+            nuevoRegistro.put("Estado", "");
+            nuevoRegistro.put("Cantidad", String.valueOf(1));
             db.insert("libros", null, nuevoRegistro);
             Toast.makeText(this, "Libro agregado correctamente", Toast.LENGTH_SHORT).show();
             c.close();
