@@ -57,11 +57,10 @@ public class fetchBooks {
                             }
 
                             if (!(openLibraryId.equals(""))) {
-                                getDetails(openLibraryId);
+                                getDetails(openLibraryId, context);
                             }
 
                             finished=true;
-                            ((newbook)context).Refresh();
                         }
                     }
                 } catch (JSONException e) {
@@ -72,7 +71,7 @@ public class fetchBooks {
         });
     }
 
-    private void getDetails (String ID){
+    private void getDetails (String ID,final Context context){
         client.getExtraBookDetails(ID, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject resp) {
@@ -93,12 +92,14 @@ public class fetchBooks {
                         paginas = "0";
                     }
 
-                    if(resp.has("isbn13")){
-                        ISBN13 = resp.getString("isbn13");
+                    if(resp.has("isbn_13")){
+                        ISBN13 = resp.getString("isbn_13").replace("[","").replace("]","").replace("\"","");
                     }
-                    if(resp.has("isbn10")){
-                        ISBN10 = resp.getString("isbn10");
+                    if(resp.has("isbn_10")){
+                        ISBN10 = resp.getString("isbn_10").replace("[","").replace("]","").replace("\"","");
                     }
+
+                    ((newbook)context).Refresh();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

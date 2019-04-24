@@ -66,9 +66,11 @@ public class newbook extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent backIntent = new Intent();
                 setResult(CANCELADO, backIntent);
-                finish();
+                finish();*/
+                Refresh();
             }
         });
 
@@ -149,7 +151,6 @@ public class newbook extends AppCompatActivity {
 
     public void Refresh(){
          if(busqueda.getStatus() == true){
-             Toast.makeText(this, busqueda.getISBN10(), Toast.LENGTH_SHORT).show();
              editISBN13.setText(busqueda.getISBN13());
              editISBN10.setText(busqueda.getISBN10());
              editTitulo.setText(busqueda.getTitulo());
