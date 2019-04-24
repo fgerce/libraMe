@@ -16,6 +16,10 @@
     <string name="ingresando">Ingresando</string>
     <string name="menuseleccion">Listado libros</string>
 
+    <string name="manuallyAdd">Agregar manualmente</string>
+    <string name="scanBook">Escanear ISBN</string>
+    <string name="searchBook">Busqueda magica</string>
+    <string name="search">Buscar</string>
 
     <string-array name="listGeneros">
         <item>Seleccionar Género</item>
@@ -58,7 +62,7 @@
         <item>Turismo</item>
     </string-array>
 
-
+    <string name="carga">Ingrese ISBN13, ISBN10 o el Título</string>
     //Strings para carga de libros
     <string name="ISBN13">ISBN13</string>
     <string name="ISBN10">ISBN10</string>
@@ -76,4 +80,5 @@
     <string name="Agregar">Agregar</string>
     <string name="Rutaimg">Ruta img</string>
     <string name="Paginas">"Páginas"</string>
+
 </resources>

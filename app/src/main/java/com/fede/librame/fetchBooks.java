@@ -1,6 +1,8 @@
 package com.fede.librame;
 
+import android.content.Context;
 import android.text.TextUtils;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -13,16 +15,19 @@ public class fetchBooks {
 
     private JSONArray docs;
 
+    private String ISBN13;
+    private String ISBN10;
     private String openLibraryId;
     private String titulo;
     private String autor;
     private String fechapublicacion;
     private String editorial;
     private String paginas="0";
+    private boolean finished = false;
 
     BookClient client = new BookClient();
 
-    public fetchBooks(String query) {
+    public fetchBooks(String query, final Context context) {
         client.getBooks(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -55,7 +60,8 @@ public class fetchBooks {
                                 getDetails(openLibraryId);
                             }
 
-
+                            finished=true;
+                            ((newbook)context).Refresh();
                         }
                     }
                 } catch (JSONException e) {
@@ -85,6 +91,13 @@ public class fetchBooks {
                         paginas = String.valueOf(resp.getInt("number_of_pages"));
                     } else {
                         paginas = "0";
+                    }
+
+                    if(resp.has("isbn13")){
+                        ISBN13 = resp.getString("isbn13");
+                    }
+                    if(resp.has("isbn10")){
+                        ISBN10 = resp.getString("isbn10");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -142,5 +155,16 @@ public class fetchBooks {
     // Get large sized book cover from covers API
     public String getLargeCoverUrl() {
         return "http://covers.openlibrary.org/b/olid/" + openLibraryId + "-L.jpg?default=false";
+    }
+
+    public String getISBN10() {
+        return ISBN10;
+    }
+
+    public String getISBN13() {
+        return ISBN13;
+    }
+    public boolean getStatus(){
+        return finished;
     }
 }

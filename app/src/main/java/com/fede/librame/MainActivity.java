@@ -1,33 +1,55 @@
 package com.fede.librame;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.FloatingActionButton;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MainActivity extends AppCompatActivity {
 
     public ListView listBooks;
     public Toolbar toolbar;
     public String userlog;
-    public FloatingActionButton AddButton;
     public SQLiteDatabase db;
 
-    public fetchBooks busqueda = new fetchBooks("OL3700132M");
-
     static final int PICK_NEW_BOOK = 1;
+    static final int SEARCH_BOOK = 2;
 
+    Dialog customDialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final SpeedDialView speedDialView = findViewById(R.id.speedDial);
+
+        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_add, R.drawable.ic_pen)
+                .setLabel(getString(R.string.manuallyAdd))
+                .setLabelColor(Color.BLACK)
+                .create());
+        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_search, R.drawable.ic_filesearch)
+                .setLabel(getString(R.string.searchBook))
+                .setLabelColor(Color.BLACK)
+                .create());
+        speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_scan, R.drawable.ic_barcode)
+                .setLabel(getString(R.string.scanBook))
+                .setLabelColor(Color.BLACK)
+                .create());
+
 
         UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
         db = usdbh.getWritableDatabase();
@@ -36,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        AddButton = findViewById(R.id.floatingAddButton);
         toolbar = findViewById(R.id.toolbar);
         userlog = getIntent().getExtras().getString("User"," ");
         toolbar.setTitle("Hola " + userlog);
@@ -66,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
                         }catch (Exception e)
                         {
                             Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+                            return true;
                         }
+                        Toast.makeText(MainActivity.this, "Actualizado", Toast.LENGTH_SHORT).show();
                         return true;
                     default:
                         return false;
@@ -74,16 +97,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AddButton.setOnClickListener(new View.OnClickListener() {
+        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
-                toNewBook.putExtra("User", userlog.toString());
-                startActivityForResult(toNewBook,PICK_NEW_BOOK);
+            public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
+                switch (speedDialActionItem.getId()) {
+                    case R.id.fab_add:
+                        Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
+                        toNewBook.putExtra("User", userlog.toString());
+                        startActivityForResult(toNewBook,PICK_NEW_BOOK);
+                        return false; // true to keep the Speed Dial open
+                    case R.id.fab_scan:
+                        Toast.makeText(MainActivity.this, "Implementar scan", Toast.LENGTH_SHORT).show();
+                        speedDialView.close(true);
+                        return true;
+                    case R.id.fab_search:
+                        showDialog(findViewById(android.R.id.content));
+                        speedDialView.close(true);
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
-
-
     }
 
     @Override
@@ -110,8 +145,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void RefreshList()
-    {
+    public void RefreshList()    {
         /*
         String allQuery = "SELECT * FROM " + "libros";
         Cursor cursor = db.rawQuery(allQuery, null);
@@ -141,5 +175,44 @@ public class MainActivity extends AppCompatActivity {
 
             listBooks.setAdapter(adaptador);
         }
+    }
+
+    String resultado;
+    public String showDialog(View view)
+    {
+        // con este tema personalizado evitamos los bordes por defecto
+        customDialog = new Dialog(this);
+        //deshabilitamos el título por defecto
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //obligamos al usuario a pulsar los botones para cerrarlo
+        customDialog.setCancelable(false);
+        //establecemos el contenido de nuestro dialog
+        customDialog.setContentView(R.layout.dialogsearchbook);
+
+        final EditText txtBusqueda = customDialog.findViewById(R.id.txtSearchItem);
+
+        customDialog.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                resultado = txtBusqueda.getText().toString();
+                Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
+                toNewBook.putExtra("User", userlog.toString());
+                toNewBook.putExtra("Query", resultado);
+                startActivityForResult(toNewBook,SEARCH_BOOK);
+                customDialog.dismiss();
+            }
+        });
+
+        ((Button) customDialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                customDialog.dismiss();
+            }
+        });
+
+        customDialog.show();
+        return resultado;
     }
 }

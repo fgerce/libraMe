@@ -25,13 +25,13 @@ public class newbook extends AppCompatActivity {
     public Button btnCancel, btnNew;
     public SQLiteDatabase db;
     public String userlog;
+    public fetchBooks busqueda;
     static final int CANCELADO = 1;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newbook);
-        userlog = getIntent().getExtras().getString("User","Public");
 
         UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe",null,1);
         db = usdbh.getWritableDatabase();
@@ -54,8 +54,14 @@ public class newbook extends AppCompatActivity {
         editPaginas = findViewById(R.id.editPaginas);
         btnCancel = findViewById(R.id.btnCancel);
         btnNew = findViewById(R.id.btnAdd);
-
         spinnerGenero.setAdapter(new SpinnerAdapterGeneros(this, R.layout.spinner, getResources().getStringArray(R.array.listGeneros)));
+
+        userlog = getIntent().getExtras().getString("User","Public");
+        if(getIntent().hasExtra("Query"))
+        {
+                 String query = getIntent().getExtras().getString("Query", "");
+                 busqueda = new fetchBooks(query, newbook.this);
+        }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,5 +145,22 @@ public class newbook extends AppCompatActivity {
             c.close();
             return RESULT_OK;
         }
+    }
+
+    public void Refresh(){
+         if(busqueda.getStatus() == true){
+             Toast.makeText(this, busqueda.getISBN10(), Toast.LENGTH_SHORT).show();
+             editISBN13.setText(busqueda.getISBN13());
+             editISBN10.setText(busqueda.getISBN10());
+             editTitulo.setText(busqueda.getTitulo());
+             editPaginas.setText(busqueda.getPaginas());
+             editAutor.setText(busqueda.getAutor());
+             editEditorial.setText(busqueda.getEditorial());
+             editFecha.setText(busqueda.getFechapublicacion());
+         }
+         else
+         {
+             Toast.makeText(this, "Busqueda incompleta", Toast.LENGTH_SHORT).show();
+         }
     }
 }
