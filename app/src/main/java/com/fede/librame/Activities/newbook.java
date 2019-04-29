@@ -1,4 +1,4 @@
-package com.fede.librame;
+package com.fede.librame.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,12 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.net.URI;
+import com.fede.librame.R;
+import com.fede.librame.Adapters.SpinnerAdapterGeneros;
+import com.fede.librame.Helpers.UsuariosSQLiteHelper;
+import com.fede.librame.Clases.fetchBooks;
 
 
 public class newbook extends AppCompatActivity {
@@ -76,17 +76,29 @@ public class newbook extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    int ISBN13 = Integer.valueOf(editISBN13.getText().toString());
-                    int ISBN10 = Integer.valueOf(editISBN10.getText().toString());
+                    String ISBN13 = editISBN13.getText().toString();
+                    String ISBN10 = editISBN10.getText().toString();
                     String Titulo = editTitulo.getText().toString();
                     String Autor = editAutor.getText().toString();
                     String Genero = spinnerGenero.getSelectedItem().toString();
                     String Desc = editDescripcion.getText().toString();
+                    if(editEdicion.getText().toString().equals(""))
+                    {
+                        editEdicion.setText("1");
+                    }
                     int Edicion = Integer.valueOf(editEdicion.getText().toString());
                     String Encuadernacion = editEncuadernacion.getText().toString();
                     String Editorial = editEditorial.getText().toString();
                     String Fecha = editFecha.getText().toString();
+                    if(editPrecio.getText().toString().equals(""))
+                    {
+                        editPrecio.setText("0");
+                    }
                     float Precio = Float.valueOf(editPrecio.getText().toString());
+                    if(editPaginas.getText().toString().equals(""))
+                    {
+                        editPaginas.setText("0");
+                    }
                     int Paginas = Integer.valueOf(editPaginas.getText().toString());
 
                     //Aca falta revisar que los campos esten correctos...
@@ -110,7 +122,7 @@ public class newbook extends AppCompatActivity {
 
     }
 
-    private int AddBookDB(int ISBN13, int ISBN10, String Titulo, String Autor, String Genero, String Descripcion, int Edicion, String Encuadernacion, String Editorial, String Fecha, float Precio, Integer Paginas)
+    private int AddBookDB(String ISBN13, String ISBN10, String Titulo, String Autor, String Genero, String Descripcion, int Edicion, String Encuadernacion, String Editorial, String Fecha, float Precio, Integer Paginas)
     {
         String[] campos = new String[] {"Titulo", "Autor", "Edicion", "Usuario"};
         String[] args = new String[] {Titulo, Autor, String.valueOf(Edicion), userlog};

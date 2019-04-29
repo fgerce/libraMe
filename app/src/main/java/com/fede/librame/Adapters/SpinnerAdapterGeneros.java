@@ -1,4 +1,4 @@
-package com.fede.librame;
+package com.fede.librame.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.fede.librame.R;
 
 public class SpinnerAdapterGeneros extends ArrayAdapter<String> {
     public String[] cadena;

@@ -1,9 +1,10 @@
-package com.fede.librame;
+package com.fede.librame.Clases;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.fede.librame.Activities.newbook;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;

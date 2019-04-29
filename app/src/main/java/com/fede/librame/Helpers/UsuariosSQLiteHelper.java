@@ -1,4 +1,4 @@
-package com.fede.librame;
+package com.fede.librame.Helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +9,7 @@ public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
     //Sentencia SQL para crear la tabla de Usuarios
     private String sqlCreate = "CREATE TABLE usuarios (ID INTEGER PRIMARY KEY AUTOINCREMENT, Usuario TEXT unique, Email TEXT unique, Contraseña TEXT)";
 
-    private String sqlCreate2 = "CREATE TABLE libros (ISBN13 INTEGER, ISBN10 INTEGER, Titulo TEXT," +
+    private String sqlCreate2 = "CREATE TABLE libros (ISBN13 TEXT, ISBN10 TEXT, Titulo TEXT," +
                         "Autor TEXT, Genero TEXT, Descripcion TEXT, Edicion INTEGER, Encuadernacion TEXT, Editorial TEXT, Fecha TEXT, " +
                         "Precio REAL, Rutaportada TEXT, Usuario TEXT, Paginas INTEGER, Estado TEXT, Cantidad INTEGER)";
 

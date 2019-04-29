@@ -1,6 +1,5 @@
-package com.fede.librame;
+package com.fede.librame.Activities;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +12,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.fede.librame.R;
+import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 
 public class Login extends AppCompatActivity {
 

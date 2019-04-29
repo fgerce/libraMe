@@ -1,4 +1,4 @@
-package com.fede.librame;
+package com.fede.librame.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.fede.librame.R;
+import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundcolor"
-    tools:context=".Login">
+    tools:context=".Activities.Login">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -91,14 +91,13 @@
 
     <com.manojbhadane.QButton
         android:id="@+id/btn_create"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:drawableStart="@drawable/ic_create_account"
+        android:drawableTop="@drawable/ic_create_account"
         android:drawablePadding="1dp"
-        android:text="@string/SignUp"
         android:textAlignment="center"
         android:textColor="@color/colorText"
         android:textSize="18sp"

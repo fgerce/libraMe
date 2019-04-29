@@ -1,23 +1,28 @@
-package com.fede.librame;
+package com.fede.librame.Activities;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.fede.librame.Adapters.AdaptadorLibros;
+import com.fede.librame.R;
+import com.fede.librame.Clases.StructListBooks;
+import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -149,19 +154,17 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = db.query("libros", campos, "Usuario=?", args, null, null, null);
 
-        StructListBooks[] data = new StructListBooks[cursor.getCount()];
+        List<StructListBooks> data = new ArrayList<StructListBooks>();
         int i = 0;
 
         if (cursor.moveToFirst()) {
             //Loop through the table rows
             do {
-                data[i] = new StructListBooks("Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
+                data.add(new StructListBooks("Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
                                                 "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
                                                 "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")),
                                                 "Fecha: " + cursor.getString(cursor.getColumnIndex("Fecha")),
-                                                "Paginas: " + String.valueOf(cursor.getInt(cursor.getColumnIndex("Paginas")))
-                );
-                i++;
+                                                "Paginas: " + String.valueOf(cursor.getInt(cursor.getColumnIndex("Paginas")))));
             } while (cursor.moveToNext());
             i=0;
             AdaptadorLibros adaptador =
@@ -198,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ((Button) customDialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
+        (customDialog.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {

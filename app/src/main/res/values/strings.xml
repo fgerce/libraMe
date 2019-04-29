@@ -20,6 +20,8 @@
     <string name="scanBook">Escanear ISBN</string>
     <string name="searchBook">Busqueda magica</string>
     <string name="search">Buscar</string>
+    <string name="listado">Seleccionar libro</string>
+
 
     <string-array name="listGeneros">
         <item>Seleccionar Género</item>
@@ -73,7 +75,7 @@
     <string name="Edicion">Edición</string>
     <string name="Encuadernacion">Encuadernación</string>
     <string name="Editorial">Editorial</string>
-    <string name="Fecha">Fecha (AAAAMMDD)</string>
+    <string name="Fecha">Fecha de publicación</string>
     <string name="Precio">Precio (USD)</string>
     <string name="nuevolibro">Nuevo libro</string>
     <string name="Cancel">Cancelar</string>

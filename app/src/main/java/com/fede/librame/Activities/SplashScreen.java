@@ -1,10 +1,12 @@
-package com.fede.librame;
+package com.fede.librame.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.fede.librame.R;
+import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
