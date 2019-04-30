@@ -166,7 +166,7 @@ public class newbook extends AppCompatActivity {
              editISBN13.setText(busqueda.getISBN13());
              editISBN10.setText(busqueda.getISBN10());
              editTitulo.setText(busqueda.getTitulo());
-             editPaginas.setText(busqueda.getPaginas());
+             editPaginas.setText(String.valueOf(busqueda.getPaginas()));
              editAutor.setText(busqueda.getAutor());
              editEditorial.setText(busqueda.getEditorial());
              editFecha.setText(busqueda.getFechapublicacion());

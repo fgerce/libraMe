@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class StructListBooks {
 
+    private Integer ID;
     private Integer ISBN13;
     private Integer ISBN10;
     private String titulo;
@@ -19,10 +20,9 @@ public class StructListBooks {
     private Integer precio;
     private URI rutaportada;
     private String usuario;
-    private String paginas;
+    private Integer paginas;
     private String estado;
     private Integer cantidad;
-
 
     public StructListBooks(Integer ISBN13, Integer ISBN10, String titulo, String autor, String genero, String descripcion, Integer edicion, String encuadernacion,
                            String editorial, String fechapublicacion, Integer precio, URI rutaportada, String usuario) {
@@ -57,7 +57,17 @@ public class StructListBooks {
         this.usuario=usuario;
     }
 
-    public StructListBooks(String titulo, String genero, String autor, String fecha, String paginas)
+    public StructListBooks(Integer ID, String titulo, String genero, String autor, String fecha, Integer paginas)
+    {
+        this.ID = ID;
+        this.titulo=titulo;
+        this.genero=genero;
+        this.autor=autor;
+        this.fechapublicacion = fecha;
+        this.paginas = paginas;
+    }
+
+    public StructListBooks(String titulo, String genero, String autor, String fecha, Integer paginas)
     {
         this.titulo=titulo;
         this.genero=genero;
@@ -128,7 +138,7 @@ public class StructListBooks {
         return usuario;
     }
 
-    public String getPaginas() {
+    public Integer getPaginas() {
         return paginas;
     }
 
@@ -139,4 +149,9 @@ public class StructListBooks {
     public String getEstado() {
         return estado;
     }
+
+    public Integer getID() {
+        return ID;
+    }
+
 }

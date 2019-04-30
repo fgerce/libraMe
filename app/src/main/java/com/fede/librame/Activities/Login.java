@@ -113,6 +113,7 @@ public class Login extends AppCompatActivity {
                     Intent toMain = new Intent().setClass(Login.this, MainActivity.class);
                     toMain.putExtra("User", struser);
                     startActivity(toMain);
+                    finish();
                 }
                 else if(c.getCount() == 0)
                 {

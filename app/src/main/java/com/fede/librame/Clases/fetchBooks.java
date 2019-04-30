@@ -24,7 +24,7 @@ public class fetchBooks {
     private String autor;
     private String fechapublicacion;
     private String editorial;
-    private String paginas="0";
+    private Integer paginas = 0;
     private boolean finished = false;
 
     BookClient client = new BookClient();
@@ -93,9 +93,9 @@ public class fetchBooks {
                         editorial = TextUtils.join(", ", publishers);
                     }
                     if (resp.has("number_of_pages")) {
-                        paginas = String.valueOf(resp.getInt("number_of_pages"));
+                        paginas = resp.getInt("number_of_pages");
                     } else {
-                        paginas = "0";
+                        paginas = 0;
                     }
 
                     if(resp.has("isbn_13")){
@@ -151,7 +151,7 @@ public class fetchBooks {
         return "http://covers.openlibrary.org/b/olid/" + openLibraryId + "-M.jpg?default=false";
     }
 
-    public String getPaginas() {
+    public Integer getPaginas() {
         return paginas;
     }
 

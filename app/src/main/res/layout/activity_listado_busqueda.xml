@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundcolor"
+    android:background="@color/primaryColor"
     tools:context=".Activities.listadoBusqueda">
 
     <ListView
@@ -20,12 +20,12 @@
         />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtPickBook"
         android:fontFamily="sans-serif-light"
         android:text="@string/listado"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorTitles"
+        android:textColor="@color/primaryTextColor"
         android:textSize="36sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"

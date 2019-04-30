@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,9 @@ public class CreateUser extends AppCompatActivity {
     public EditText editPassword;
     public EditText editMail;
     public EditText editUser;
+    public TextInputLayout layouteditUser;
+    public TextInputLayout layouteditPassword;
+    public TextInputLayout layouteditEmail;
     static final int NO_USER = 2;
     public SQLiteDatabase db;
 
@@ -44,6 +48,9 @@ public class CreateUser extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         editMail = findViewById(R.id.editEmail);
         editUser = findViewById(R.id.editUser);
+        layouteditEmail = findViewById(R.id.layouteditEmail);
+        layouteditPassword = findViewById(R.id.layouteditPassword);
+        layouteditUser = findViewById(R.id.layouteditUser);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,19 +64,39 @@ public class CreateUser extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean error = false;
+
                 if(editUser.getText().toString().equals(""))
                 {
-                    Toast.makeText(CreateUser.this, "Usuario invalido", Toast.LENGTH_SHORT).show();
-                    return;
+                    layouteditUser.setError("Usuario invalido");
+                    error = true;
                 }
-                else if(editPassword.getText().toString().equals(""))
+                else
                 {
-                    Toast.makeText(CreateUser.this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
-                    return;
+                    layouteditUser.setError(null);
                 }
-                else if(!isEmailValid(editMail.getText().toString()))
+                if(editPassword.getText().toString().equals(""))
                 {
-                    Toast.makeText(CreateUser.this, "Email invalido", Toast.LENGTH_SHORT).show();
+                    layouteditPassword.setError("Contraseña invalida");
+                    error = true;
+                }
+                else
+                {
+                    layouteditPassword.setError(null);
+                }
+                if(!isEmailValid(editMail.getText().toString()))
+                {
+                    layouteditEmail.setError("Email invalido");
+                    error = true;
+                }
+                else
+                {
+                    layouteditEmail.setError(null);
+                }
+
+                if(error == true)
+                {
                     return;
                 }
                 else
@@ -83,8 +110,6 @@ public class CreateUser extends AppCompatActivity {
                     }
                     else
                     {
-                        editUser.setText("");
-                        editMail.setText("");
                         editPassword.setText("");
                     }
 

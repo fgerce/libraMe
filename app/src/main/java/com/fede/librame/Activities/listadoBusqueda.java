@@ -15,7 +15,7 @@ import java.util.List;
 public class listadoBusqueda extends AppCompatActivity {
 
     public ListView listBooks;
-    private fetchBooks busqueda;
+    public fetchBooks busqueda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,9 @@ public class listadoBusqueda extends AppCompatActivity {
 
         listBooks = findViewById(R.id.listBooks);
         busqueda = new fetchBooks(getIntent().getExtras().getString("bookID", ""), this);
+
+
+
     }
 
     public void RefreshList() {
@@ -33,7 +36,7 @@ public class listadoBusqueda extends AppCompatActivity {
                                 "Genero" + " ",
                                 "Autor: " + busqueda.getAutor(),
                                 "Fecha: " + busqueda.getFechapublicacion(),
-                                "Paginas: " + busqueda.getPaginas()
+                                 busqueda.getPaginas()
                     ));
 
     AdaptadorLibros adaptador =

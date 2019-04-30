@@ -13,13 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.listadoBusqueda"></activity>
+        <activity android:name=".Activities.BookDetails"
+            android:screenOrientation="portrait"
+        />
+        <activity android:name=".Activities.listadoBusqueda"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activities.newbook"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Login"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.SplashScreen"
             android:screenOrientation="portrait">
@@ -34,9 +39,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

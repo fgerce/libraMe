@@ -4,12 +4,16 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +25,7 @@ import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public String userlog;
     public SQLiteDatabase db;
+    public List<StructListBooks> data = new ArrayList<StructListBooks>();
+    public AdaptadorLibros adaptador;
 
     static final int PICK_NEW_BOOK = 1;
     static final int SEARCH_BOOK = 2;
@@ -43,10 +50,13 @@ public class MainActivity extends AppCompatActivity {
         final SpeedDialView speedDialView = findViewById(R.id.speedDial);
 
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_add, R.drawable.ic_pen)
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.secondaryLightColor))
                 .create());
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_search, R.drawable.ic_filesearch)
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.secondaryLightColor))
                 .create());
         speedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id.fab_scan, R.drawable.ic_barcode)
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.secondaryLightColor))
                 .create());
 
 
@@ -60,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         userlog = getIntent().getExtras().getString("User"," ");
         toolbar.setTitle("Hola " + userlog);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryTextColor));
         toolbar.setSubtitle(getResources().getString(R.string.menuseleccion));
-        toolbar.setSubtitleTextColor(getResources().getColor(R.color.colorText));
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.primaryTextColor));
         toolbar.inflateMenu(R.menu.toolbar_menu);
         listBooks = findViewById(R.id.listBooks);
+        registerForContextMenu(listBooks);
 
         try{
             RefreshList();
@@ -118,6 +129,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        listBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                StructListBooks item = data.get(position);
+                Intent toBookDetails = new Intent().setClass(MainActivity.this, BookDetails.class);
+                toBookDetails.putExtra("ID", item.getID());
+                toBookDetails.putExtra("User", userlog.toString());
+                startActivity(toBookDetails);
+            }
+        });
+
+
     }
 
     @Override
@@ -144,32 +168,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+
+        StructListBooks libroseleccionado = data.get(info.position);
+
+        switch (item.getItemId()){
+            case R.id.edit_item:
+                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.remove_item:
+                db.delete("libros", "id="+ libroseleccionado.getID().toString(), null);
+                data.remove(info.position);
+                adaptador = new AdaptadorLibros(this, data);
+                listBooks.setAdapter(adaptador);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.contextmenu, menu);
+    }
+
+
     public void RefreshList()    {
-        /*
-        String allQuery = "SELECT * FROM " + "libros";
-        Cursor cursor = db.rawQuery(allQuery, null);
-        */
-        String[] campos = new String[] {"Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas"};
+        String[] campos = new String[] {"ID", "Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas"};
         String[] args = new String[] {userlog.toString()};
 
         Cursor cursor = db.query("libros", campos, "Usuario=?", args, null, null, null);
 
-        List<StructListBooks> data = new ArrayList<StructListBooks>();
-        int i = 0;
-
+        data.clear();
         if (cursor.moveToFirst()) {
             //Loop through the table rows
             do {
-                data.add(new StructListBooks("Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
-                                                "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
-                                                "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")),
-                                                "Fecha: " + cursor.getString(cursor.getColumnIndex("Fecha")),
-                                                "Paginas: " + String.valueOf(cursor.getInt(cursor.getColumnIndex("Paginas")))));
+            data.add(new StructListBooks(    cursor.getInt(cursor.getColumnIndex("ID")),
+                                        "Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
+                                        "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
+                                        "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")),
+                                        "Fecha: " + cursor.getString(cursor.getColumnIndex("Fecha")),
+                                        cursor.getInt(cursor.getColumnIndex("Paginas"))
+                                                )
+                );
             } while (cursor.moveToNext());
-            i=0;
-            AdaptadorLibros adaptador =
-                    new AdaptadorLibros(this, data);
-
+            adaptador = new AdaptadorLibros(this, data);
             listBooks.setAdapter(adaptador);
         }
     }

@@ -13,10 +13,10 @@ import com.fede.librame.Clases.StructListBooks;
 import java.util.List;
 
 public class AdaptadorLibros extends ArrayAdapter<StructListBooks> {
-   List<StructListBooks> datos;
+    private List<StructListBooks> datos;
 
     public AdaptadorLibros(Context context,  List <StructListBooks> datos){
-        super(context, R.layout.items_books);
+        super(context, R.layout.items_books, datos);
         this.datos = datos;
     }
 
@@ -37,7 +37,7 @@ public class AdaptadorLibros extends ArrayAdapter<StructListBooks> {
         lblFecha.setText(datos.get(posicion).getFechapublicacion());
 
         TextView lblPaginas = item.findViewById(R.id.lbl_paginas);
-        lblPaginas.setText(datos.get(posicion).getPaginas());
+        lblPaginas.setText("Paginas: " + datos.get(posicion).getPaginas());
 
         return(item);
     }

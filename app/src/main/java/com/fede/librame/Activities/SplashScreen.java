@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.fede.librame.R;
 import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,16 +19,21 @@ import java.util.TimerTask;
 public class SplashScreen extends AppCompatActivity {
 
     private static final long SPLASH_SCREEN_DELAY = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        try {
-            copyDataBase();
-        }catch (Exception e)
+        File dbFile = getApplicationContext().getDatabasePath("libraMe");
+        if (!dbFile.exists())
         {
-            Toast.makeText(this, "Error en la base de datos", Toast.LENGTH_SHORT).show();
+            try {
+                copyDataBase();
+            }catch (Exception e)
+            {
+                Toast.makeText(this, "Error en la base de datos", Toast.LENGTH_SHORT).show();
+            }
         }
 
         TimerTask task = new TimerTask() {
