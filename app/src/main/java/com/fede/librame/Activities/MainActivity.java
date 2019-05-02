@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -166,6 +167,23 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Solicitar tecnico, problema en newbook", Toast.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == SEARCH_BOOK){
+            if (resultCode == RESULT_OK) {
+                try
+                {
+                    RefreshList();
+                }catch (Exception e)
+                {
+                    Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if(resultCode == newbook.CANCELADO){
+
+            }
+            else{
+                Toast.makeText(this, "Solicitar tecnico, problema en newbook", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -199,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void RefreshList()    {
-        String[] campos = new String[] {"ID", "Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas"};
+        String[] campos = new String[] {"ID", "Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas", "Rutaportada"};
         String[] args = new String[] {userlog.toString()};
 
         Cursor cursor = db.query("libros", campos, "Usuario=?", args, null, null, null);
@@ -208,13 +226,14 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             //Loop through the table rows
             do {
-            data.add(new StructListBooks(    cursor.getInt(cursor.getColumnIndex("ID")),
-                                        "Titulo: " + cursor.getString(cursor.getColumnIndex("Titulo")),
+            data.add(new StructListBooks(cursor.getInt(cursor.getColumnIndex("ID")),
+                                         cursor.getString(cursor.getColumnIndex("Titulo")),
                                         "Genero: " + cursor.getString(cursor.getColumnIndex("Genero")),
                                         "Autor: " + cursor.getString(cursor.getColumnIndex("Autor")),
                                         "Fecha: " + cursor.getString(cursor.getColumnIndex("Fecha")),
-                                        cursor.getInt(cursor.getColumnIndex("Paginas"))
-                                                )
+                                        cursor.getInt(cursor.getColumnIndex("Paginas")),
+                                        Uri.parse(cursor.getString(cursor.getColumnIndex("Rutaportada")))
+                                        )
                 );
             } while (cursor.moveToNext());
             adaptador = new AdaptadorLibros(this, data);

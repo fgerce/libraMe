@@ -19,7 +19,7 @@
             app:layout_constraintGuide_percent="0.08" />
 
         <TextView
-            android:id="@+id/ISBN13"
+            android:id="@+id/txt_ISBN13"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -44,7 +44,7 @@
             app:layout_constraintGuide_percent="0.16" />
 
         <TextView
-            android:id="@+id/ISBN10"
+            android:id="@+id/txt_ISBN10"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -69,7 +69,7 @@
             app:layout_constraintGuide_percent="0.50" />
 
         <TextView
-            android:id="@+id/Descripcion"
+            android:id="@+id/txt_Descripcion"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -81,6 +81,7 @@
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +96,7 @@
             app:layout_constraintGuide_percent="0.58" />
 
         <TextView
-            android:id="@+id/Encuadernacion"
+            android:id="@+id/txt_Encuadernacion"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

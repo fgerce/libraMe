@@ -1,14 +1,17 @@
 package com.fede.librame.Adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fede.librame.R;
 import com.fede.librame.Clases.StructListBooks;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,6 +41,14 @@ public class AdaptadorLibros extends ArrayAdapter<StructListBooks> {
 
         TextView lblPaginas = item.findViewById(R.id.lbl_paginas);
         lblPaginas.setText("Paginas: " + datos.get(posicion).getPaginas());
+
+
+        try{
+            ImageView listview_image = item.findViewById(R.id.listview_image);
+            Picasso.with(getContext()).load(datos.get(posicion).getRutaportada()).error(R.drawable.noimage).into(listview_image);
+        }catch (Exception e){
+
+        }
 
         return(item);
     }

@@ -25,8 +25,6 @@ public class listadoBusqueda extends AppCompatActivity {
         listBooks = findViewById(R.id.listBooks);
         busqueda = new fetchBooks(getIntent().getExtras().getString("bookID", ""), this);
 
-
-
     }
 
     public void RefreshList() {

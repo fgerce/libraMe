@@ -25,6 +25,9 @@ public class fetchBooks {
     private String fechapublicacion;
     private String editorial;
     private Integer paginas = 0;
+    private String descripcion;
+    private String encuadernacion;
+
     private boolean finished = false;
 
     BookClient client = new BookClient();
@@ -49,9 +52,7 @@ public class fetchBooks {
                             if(finished == false) {
                                 if (bookJson.has("title")) {
                                     titulo = bookJson.getString("title");
-                                    Toast.makeText(context, String.valueOf(finished), Toast.LENGTH_SHORT).show();
                                 }
-
                                 autor = getAuthor(bookJson);
                                 fechapublicacion = bookJson.has("first_publish_year") ? bookJson.getString("first_publish_year") : "";
 
@@ -98,11 +99,19 @@ public class fetchBooks {
                         paginas = 0;
                     }
 
+                    if(resp.has("description")){
+                        descripcion = resp.getString("description");
+                    }
+
                     if(resp.has("isbn_13")){
                         ISBN13 = resp.getString("isbn_13").replace("[","").replace("]","").replace("\"","");
                     }
                     if(resp.has("isbn_10")){
                         ISBN10 = resp.getString("isbn_10").replace("[","").replace("]","").replace("\"","");
+                    }
+                    if(resp.has("physical_format"))
+                    {
+                        encuadernacion = resp.getString("physical_format");
                     }
 
                     ((newbook)context).Refresh();
@@ -173,5 +182,12 @@ public class fetchBooks {
     }
     public boolean getStatus(){
         return finished;
+    }
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getEncuadernacion() {
+        return encuadernacion;
     }
 }

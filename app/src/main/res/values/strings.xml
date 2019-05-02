@@ -22,6 +22,7 @@
     <string name="search">Buscar</string>
     <string name="listado">Seleccionar libro</string>
 
+    <string name="otrogenero">Otro</string>
     <string-array name="listGeneros">
         <item>Seleccionar Género</item>
         <item>Animales</item>
