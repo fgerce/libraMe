@@ -37,6 +37,7 @@ public class Tab3Imagen extends Fragment {
         activity = (BookDetails)getActivity();
         progressBar = v.findViewById(R.id.progressImg);
         progressBar.setVisibility(View.VISIBLE);
+
         try{
             ImageView listview_image = v.findViewById(R.id.imgPortada);
             String auxruta = activity.libroactual.getRutaportada().toString().replace("-M.jpg", "-L.jpg");
