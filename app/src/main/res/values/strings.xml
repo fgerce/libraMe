@@ -16,6 +16,8 @@
     <string name="ingresando">Ingresando</string>
     <string name="menuseleccion">Listado libros</string>
 
+    <string name="action_settings">Configuración</string>
+
     <string name="manuallyAdd">Agregar manualmente</string>
     <string name="scanBook">Escanear ISBN</string>
     <string name="searchBook">Busqueda magica</string>
