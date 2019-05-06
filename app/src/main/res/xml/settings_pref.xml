@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="display_text"
-        android:summaryOff="Invisible"
-        android:summaryOn="Visible"
-        android:title="Zaraza"/>
+    <PreferenceCategory android:title="General">
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="stock_mode"
+            android:title="Habilitar modo stock" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/back_colors"
+            android:entryValues="@array/back_colors_ref"
+            android:key="back_color"
+            android:title="Color de fondo" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

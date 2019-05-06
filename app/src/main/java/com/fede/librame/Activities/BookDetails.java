@@ -1,13 +1,20 @@
 package com.fede.librame.Activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,14 +33,15 @@ import java.sql.Struct;
 
 public class BookDetails extends AppCompatActivity {
 
+    public StructListBooks libroactual; //Este objeto es lo que leen los fragments *TABS*
+
     private Integer ID;
     private String usuario;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    public SQLiteDatabase db;
-    public Toolbar toolbar;
-
-    public StructListBooks libroactual;
+    private SQLiteDatabase db;
+    private Toolbar toolbar;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,8 @@ public class BookDetails extends AppCompatActivity {
         ID = getIntent().getExtras().getInt("ID", -1);
         usuario = getIntent().getExtras().getString("User", "");
 
+        layout = findViewById(R.id.detailsLayout);
+        refreshColor(layout);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Detalles");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryTextColor));
@@ -123,6 +133,34 @@ public class BookDetails extends AppCompatActivity {
             Toast.makeText(this, "Error en carga de base de datos - Consulte tecnico", Toast.LENGTH_SHORT).show();
         }
 
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.delete:
+                        new AlertDialog.Builder(BookDetails.this)
+                                .setTitle("Eliminar")
+                                .setMessage("¿Está seguro que desea eliminar este libro?")
+
+                                // Specifying a listener allows you to take an action before dismissing the dialog.
+                                // The dialog is automatically dismissed when a dialog button is clicked.
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        db.delete("libros", "id="+ ID, null);
+                                        finish();
+                                    }
+                                })
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setNegativeButton(android.R.string.no, null)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
 
         //Podria comprobar que el usuario sea el correspondiente al libro...
 
@@ -140,6 +178,19 @@ public class BookDetails extends AppCompatActivity {
         adapter.addFragment(new Tab2Info(),"Detalles");
         adapter.addFragment(new Tab3Imagen(),"Portada");
         viewPager.setAdapter(adapter);
+    }
+
+    public void refreshColor(ConstraintLayout layout) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = pref.getString("back_color", "0");
+        if (!(color.equals("0")))
+        {
+            layout.setBackgroundColor(Color.parseColor(color));
+        }
+        else
+        {
+            layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryColor));
+        }
     }
 
 }

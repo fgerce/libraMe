@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listGeneros">
+        <item>Seleccionar Género</item>
+        <item>Animales</item>
+        <item>Arte</item>
+        <item>Autoayuda</item>
+        <item>Bolsillo</item>
+        <item>Ciencia</item>
+        <item>Ciencia ficcion</item>
+        <item>Cine</item>
+        <item>Clásicos</item>
+        <item>Cómics</item>
+        <item>Deportes</item>
+        <item>Derecho</item>
+        <item>Diccionario</item>
+        <item>Diseño</item>
+        <item>Drama</item>
+        <item>Economía</item>
+        <item>Fantasía</item>
+        <item>Filosofía</item>
+        <item>Fotografía</item>
+        <item>Historia</item>
+        <item>Humor</item>
+        <item>Latinoamericanos</item>
+        <item>Maternidad</item>
+        <item>Medicina</item>
+        <item>Música</item>
+        <item>Negocios</item>
+        <item>Novela gráfica</item>
+        <item>Novela historica</item>
+        <item>Novela romántica</item>
+        <item>Novelas</item>
+        <item>Poesía</item>
+        <item>Policiales</item>
+        <item>Política</item>
+        <item>Psicologia</item>
+        <item>Sociologia</item>
+        <item>Teatro</item>
+        <item>Técnicos</item>
+        <item>Turismo</item>
+    </string-array>
+
+    <string-array name="back_colors">
+        <item>Default</item>
+        <item>Azul</item>
+        <item>Rojo</item>
+        <item>Gris</item>
+    </string-array>
+
+    <string-array name="back_colors_ref">
+        <item>0</item>       //Default
+        <item>#003b9b</item> //Azul
+        <item>#d12900</item> //Rojo
+        <item>#afafaf</item> //Gris
+    </string-array>
+
+
+</resources>

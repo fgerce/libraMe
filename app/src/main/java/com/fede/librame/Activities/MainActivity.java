@@ -1,15 +1,20 @@
 package com.fede.librame.Activities;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -28,7 +33,6 @@ import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
     public SQLiteDatabase db;
     public List<StructListBooks> data = new ArrayList<StructListBooks>();
     public AdaptadorLibros adaptador;
+    public ConstraintLayout layout;
 
     static final int PICK_NEW_BOOK = 1;
     static final int SEARCH_BOOK = 2;
 
     Dialog customDialog = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshList();
+        refreshColor(layout);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.toolbar_menu);
         listBooks = findViewById(R.id.listBooks);
         registerForContextMenu(listBooks);
+        layout = findViewById(R.id.mainLayout);
+        refreshColor(layout);
 
         try{
-            RefreshList();
+            refreshList();
         }catch (Exception e)
         {
             Toast.makeText(this, "Error cargando datos", Toast.LENGTH_SHORT).show();
@@ -91,13 +106,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.logout:
+                        onBackPressed();
+                        return true;
                     case R.id.setting:
                         Intent toSettings = new Intent(MainActivity.this, Settings.class);
                         startActivity(toSettings);
                         return true;
                     case R.id.sync:
                         try{
-                            RefreshList();
+                            refreshList();
                         }catch (Exception e)
                         {
                             Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
@@ -144,8 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(toBookDetails);
             }
         });
-
-
     }
 
     @Override
@@ -155,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 try{
-                    RefreshList();
+                    refreshList();
                 }catch (Exception e)
                 {
                     Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
@@ -174,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try
                 {
-                    RefreshList();
+                    refreshList();
                 }catch (Exception e)
                 {
                     Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
@@ -199,8 +215,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.edit_item:
-                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
+                Intent toEditBook = new Intent().setClass(MainActivity.this, editBook.class);
+                toEditBook.putExtra("ID", libroseleccionado.getID());
+                toEditBook.putExtra("User", userlog.toString());
+                startActivity(toEditBook);
                 return true;
+
             case R.id.remove_item:
                 db.delete("libros", "id="+ libroseleccionado.getID().toString(), null);
                 data.remove(info.position);
@@ -218,8 +238,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.contextmenu, menu);
     }
 
-
-    public void RefreshList()    {
+    public void refreshList(){
         String[] campos = new String[] {"ID", "Usuario", "Titulo", "Genero", "Autor", "Fecha", "Paginas", "Rutaportada"};
         String[] args = new String[] {userlog.toString()};
 
@@ -244,9 +263,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    String resultado;
-    public String showDialog(View view)
-    {
+    public void showDialog(View view){
         // con este tema personalizado evitamos los bordes por defecto
         customDialog = new Dialog(this);
         //deshabilitamos el título por defecto
@@ -262,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+                String resultado;
                 resultado = txtBusqueda.getText().toString();
                 Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
                 toNewBook.putExtra("User", userlog.toString());
@@ -280,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         customDialog.show();
-        return resultado;
     }
 
     @Override
@@ -302,8 +319,18 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-
     }
 
-
+    public void refreshColor(ConstraintLayout layout) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = pref.getString("back_color", "0");
+        if (!(color.equals("0")))
+        {
+            layout.setBackgroundColor(Color.parseColor(color));
+        }
+        else
+        {
+            layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryColor));
+        }
+    }
 }

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
@@ -41,10 +42,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:visibility="visible"
-        app:sdMainFabOpenedBackgroundColor="@color/secondaryLightColor"
-        app:sdMainFabClosedBackgroundColor="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:sdMainFabClosedSrc="@drawable/ic_plus_white" />
+        app:sdMainFabClosedBackgroundColor="@color/secondaryColor"
+        app:sdMainFabClosedSrc="@drawable/ic_plus_white"
+        app:sdMainFabOpenedBackgroundColor="@color/secondaryLightColor" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,10 +2,15 @@ package com.fede.librame.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,13 +26,14 @@ import com.fede.librame.Clases.fetchBooks;
 
 public class newbook extends AppCompatActivity {
 
-    public EditText editISBN13, editISBN10, editTitulo, editAutor, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio, editPaginas, editRuta;
-    public Spinner spinnerGenero;
-    public Button btnCancel, btnNew;
-    public SQLiteDatabase db;
-    public String userlog;
-    public fetchBooks busqueda;
-    public ProgressBar progressBar;
+    private EditText editISBN13, editISBN10, editTitulo, editAutor, editDescripcion, editEdicion, editEncuadernacion, editEditorial, editFecha, editPrecio, editPaginas, editRuta;
+    private Spinner spinnerGenero;
+    private Button btnCancel, btnNew;
+    private SQLiteDatabase db;
+    private String userlog;
+    private fetchBooks busqueda;
+    private ProgressBar progressBar;
+    private ConstraintLayout layout;
     static final int CANCELADO = 1;
 
      @Override
@@ -56,9 +62,12 @@ public class newbook extends AppCompatActivity {
         editRuta = findViewById(R.id.editRuta);
         editPaginas = findViewById(R.id.editPaginas);
         btnCancel = findViewById(R.id.btnCancel);
-        btnNew = findViewById(R.id.btnAdd);
+        btnNew = findViewById(R.id.btnEdit);
         spinnerGenero.setAdapter(new SpinnerAdapterGeneros(this, R.layout.spinner, getResources().getStringArray(R.array.listGeneros)));
         progressBar = findViewById(R.id.progressBar);
+        layout = findViewById(R.id.layoutNewBook);
+
+        refreshColor(layout);
 
         userlog = getIntent().getExtras().getString("User","Public");
         if(getIntent().hasExtra("Query"))
@@ -192,5 +201,18 @@ public class newbook extends AppCompatActivity {
              Toast.makeText(this, "Busqueda incompleta", Toast.LENGTH_SHORT).show();
          }
          progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void refreshColor(ConstraintLayout layout) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = pref.getString("back_color", "0");
+        if (!(color.equals("0")))
+        {
+            layout.setBackgroundColor(Color.parseColor(color));
+        }
+        else
+        {
+            layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryColor));
+        }
     }
 }

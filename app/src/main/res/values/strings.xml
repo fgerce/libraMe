@@ -15,6 +15,9 @@
     <string name="wronguser">Usuario y/o contraseña incorrecta</string>
     <string name="ingresando">Ingresando</string>
     <string name="menuseleccion">Listado libros</string>
+    <string name="Cantidad">Cantidad</string>
+    <string name="Modificar">Modificar</string>
+    <string name="editarlibro">Editar libro</string>
 
     <string name="action_settings">Configuración</string>
 
@@ -25,46 +28,6 @@
     <string name="listado">Seleccionar libro</string>
 
     <string name="otrogenero">Otro</string>
-    <string-array name="listGeneros">
-        <item>Seleccionar Género</item>
-        <item>Animales</item>
-        <item>Arte</item>
-        <item>Autoayuda</item>
-        <item>Bolsillo</item>
-        <item>Ciencia</item>
-        <item>Ciencia ficcion</item>
-        <item>Cine</item>
-        <item>Clásicos</item>
-        <item>Cómics</item>
-        <item>Deportes</item>
-        <item>Derecho</item>
-        <item>Diccionario</item>
-        <item>Diseño</item>
-        <item>Drama</item>
-        <item>Economía</item>
-        <item>Fantasía</item>
-        <item>Filosofía</item>
-        <item>Fotografía</item>
-        <item>Historia</item>
-        <item>Humor</item>
-        <item>Latinoamericanos</item>
-        <item>Maternidad</item>
-        <item>Medicina</item>
-        <item>Música</item>
-        <item>Negocios</item>
-        <item>Novela gráfica</item>
-        <item>Novela historica</item>
-        <item>Novela romántica</item>
-        <item>Novelas</item>
-        <item>Poesía</item>
-        <item>Policiales</item>
-        <item>Política</item>
-        <item>Psicologia</item>
-        <item>Sociologia</item>
-        <item>Teatro</item>
-        <item>Técnicos</item>
-        <item>Turismo</item>
-    </string-array>
 
     <string name="carga">Ingrese ISBN13, ISBN10 o el Título</string>
     //Strings para carga de libros
@@ -84,8 +47,5 @@
     <string name="Agregar">Agregar</string>
     <string name="Rutaimg">Ruta img</string>
     <string name="Paginas">"Páginas"</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

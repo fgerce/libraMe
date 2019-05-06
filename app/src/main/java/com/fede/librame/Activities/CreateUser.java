@@ -2,11 +2,16 @@ package com.fede.librame.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,16 +25,17 @@ import java.util.regex.Pattern;
 
 public class CreateUser extends AppCompatActivity {
 
-    public Button btnBack;
-    public Button btnCreate;
-    public EditText editPassword;
-    public EditText editMail;
-    public EditText editUser;
-    public TextInputLayout layouteditUser;
-    public TextInputLayout layouteditPassword;
-    public TextInputLayout layouteditEmail;
+    private Button btnBack;
+    private Button btnCreate;
+    private EditText editPassword;
+    private EditText editMail;
+    private EditText editUser;
+    private TextInputLayout layouteditUser;
+    private TextInputLayout layouteditPassword;
+    private TextInputLayout layouteditEmail;
     static final int NO_USER = 2;
-    public SQLiteDatabase db;
+    private SQLiteDatabase db;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,8 @@ public class CreateUser extends AppCompatActivity {
         layouteditEmail = findViewById(R.id.layouteditEmail);
         layouteditPassword = findViewById(R.id.layouteditPassword);
         layouteditUser = findViewById(R.id.layouteditUser);
+        layout = findViewById(R.id.layoutCreateUser);
+        refreshColor(layout);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,4 +167,16 @@ public class CreateUser extends AppCompatActivity {
         return isValid;
     }
 
+    public void refreshColor(ConstraintLayout layout) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = pref.getString("back_color", "0");
+        if (!(color.equals("0")))
+        {
+            layout.setBackgroundColor(Color.parseColor(color));
+        }
+        else
+        {
+            layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryColor));
+        }
+    }
 }
