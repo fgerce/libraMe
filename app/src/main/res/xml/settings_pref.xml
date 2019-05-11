@@ -14,5 +14,12 @@
             android:key="back_color"
             android:title="Color de fondo" />
 
+        <ListPreference
+            android:defaultValue="5500"
+            android:entries="@array/tiempos"
+            android:entryValues="@array/tiempos"
+            android:key="timeOut"
+            android:title="Time out búsqueda (ms)" />
+
     </PreferenceCategory>
 </PreferenceScreen>

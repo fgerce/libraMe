@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +36,10 @@ public class newbook extends AppCompatActivity {
     private fetchBooks busqueda;
     private ProgressBar progressBar;
     private ConstraintLayout layout;
+    private boolean status = true;
+    private long timeOut;
     static final int CANCELADO = 1;
+
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +72,29 @@ public class newbook extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.layoutNewBook);
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        timeOut = Integer.valueOf(pref.getString("timeOut", "5500"));
+
+        CountDownTimer timer = new CountDownTimer(timeOut, timeOut) {
+         public void onTick(long millisUntilFinished) {
+
+         }
+         public void onFinish() {
+             busqueda.cancel = true;
+             Refresh();
+         }
+        };
+
         refreshColor(layout);
 
         userlog = getIntent().getExtras().getString("User","Public");
         if(getIntent().hasExtra("Query"))
         {
-                 String query = getIntent().getExtras().getString("Query", "");
-                 busqueda = new fetchBooks(query, newbook.this);
-                 progressBar.setVisibility(View.VISIBLE);
+            habilitarItems(false);
+            String query = getIntent().getExtras().getString("Query", "");
+            busqueda = new fetchBooks(query, newbook.this);
+            timer.start();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -89,48 +109,43 @@ public class newbook extends AppCompatActivity {
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    String ISBN13 = editISBN13.getText().toString();
-                    String ISBN10 = editISBN10.getText().toString();
-                    String Titulo = editTitulo.getText().toString();
-                    String Autor = editAutor.getText().toString();
-                    String Genero = spinnerGenero.getSelectedItem().toString();
-                    String Desc = editDescripcion.getText().toString();
-                    if(editEdicion.getText().toString().equals(""))
-                    {
-                        editEdicion.setText("1");
-                    }
-                    int Edicion = Integer.valueOf(editEdicion.getText().toString());
-                    String Encuadernacion = editEncuadernacion.getText().toString();
-                    String Editorial = editEditorial.getText().toString();
-                    String Fecha = editFecha.getText().toString();
-                    if(editPrecio.getText().toString().equals(""))
-                    {
-                        editPrecio.setText("0");
-                    }
-                    float Precio = Float.valueOf(editPrecio.getText().toString());
-                    if(editPaginas.getText().toString().equals(""))
-                    {
-                        editPaginas.setText("0");
-                    }
-                    int Paginas = Integer.valueOf(editPaginas.getText().toString());
-                    String Ruta = editRuta.getText().toString();
+                if (status == true) {
+                    try {
+                        String ISBN13 = editISBN13.getText().toString();
+                        String ISBN10 = editISBN10.getText().toString();
+                        String Titulo = editTitulo.getText().toString();
+                        String Autor = editAutor.getText().toString();
+                        String Genero = spinnerGenero.getSelectedItem().toString();
+                        String Desc = editDescripcion.getText().toString();
+                        if (editEdicion.getText().toString().equals("")) {
+                            editEdicion.setText("1");
+                        }
+                        int Edicion = Integer.valueOf(editEdicion.getText().toString());
+                        String Encuadernacion = editEncuadernacion.getText().toString();
+                        String Editorial = editEditorial.getText().toString();
+                        String Fecha = editFecha.getText().toString();
+                        if (editPrecio.getText().toString().equals("")) {
+                            editPrecio.setText("0");
+                        }
+                        float Precio = Float.valueOf(editPrecio.getText().toString());
+                        if (editPaginas.getText().toString().equals("")) {
+                            editPaginas.setText("0");
+                        }
+                        int Paginas = Integer.valueOf(editPaginas.getText().toString());
+                        String Ruta = editRuta.getText().toString();
 
-                    //Aca falta revisar que los campos esten correctos...
+                        //Aca falta revisar que los campos esten correctos...
 
-                    if(AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio, Ruta, Paginas) == RESULT_OK) {
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_OK, returnIntent);
-                        finish();
+                        if (AddBookDB(ISBN13, ISBN10, Titulo, Autor, Genero, Desc, Edicion, Encuadernacion, Editorial, Fecha, Precio, Ruta, Paginas) == RESULT_OK) {
+                            Intent returnIntent = new Intent();
+                            setResult(RESULT_OK, returnIntent);
+                            finish();
+                        } else {
+                            //Hubo problemas con la carga del libro...
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(newbook.this, "Error en datos!", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        //Hubo problemas con la carga del libro...
-                    }
-                }
-                catch (Exception e)
-                {
-                    Toast.makeText(newbook.this, "Error en datos!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -146,7 +161,9 @@ public class newbook extends AppCompatActivity {
 
         if(c.getCount() > 0)
         {
-            Toast.makeText(this, "Libro ya existente", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(layout, "Libro ya existente", Snackbar.LENGTH_LONG);
+            snackbar.show();
             c.close();
             return c.getCount();
         }
@@ -174,14 +191,13 @@ public class newbook extends AppCompatActivity {
             nuevoRegistro.put("Estado", "");
             nuevoRegistro.put("Cantidad", String.valueOf(1));
             db.insert("libros", null, nuevoRegistro);
-            Toast.makeText(this, "Libro agregado correctamente", Toast.LENGTH_SHORT).show();
             c.close();
             return RESULT_OK;
         }
     }
 
     public void Refresh(){
-         if(busqueda.getStatus() == true){
+         if(busqueda.getStatus()){
              editISBN13.setText(busqueda.getISBN13());
              editISBN10.setText(busqueda.getISBN10());
              editTitulo.setText(busqueda.getTitulo());
@@ -198,9 +214,12 @@ public class newbook extends AppCompatActivity {
          }
          else
          {
-             Toast.makeText(this, "Busqueda incompleta", Toast.LENGTH_SHORT).show();
+             Snackbar snackbar = Snackbar
+                     .make(layout, "Busqueda fallida", Snackbar.LENGTH_LONG);
+             snackbar.show();
          }
-         progressBar.setVisibility(View.INVISIBLE);
+        habilitarItems(true);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void refreshColor(ConstraintLayout layout) {
@@ -215,4 +234,24 @@ public class newbook extends AppCompatActivity {
             layout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryColor));
         }
     }
+
+    private void habilitarItems(boolean valor){
+         if(status != valor){
+             editISBN13.setEnabled(valor);
+             editISBN10.setEnabled(valor);
+             editTitulo.setEnabled(valor);
+             editAutor.setEnabled(valor);
+             spinnerGenero.setEnabled(valor);
+             editDescripcion.setEnabled(valor);
+             editEdicion.setEnabled(valor);
+             editEncuadernacion.setEnabled(valor);
+             editEditorial.setEnabled(valor);
+             editFecha.setEnabled(valor);
+             editPrecio.setEnabled(valor);
+             editRuta.setEnabled(valor);
+             editPaginas.setEnabled(valor);
+             status = valor;
+         }
+    }
+
 }

@@ -11,6 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cz.msebera.android.httpclient.Header;
 
 public class fetchBooks {
@@ -27,55 +30,61 @@ public class fetchBooks {
     private Integer paginas = 0;
     private String descripcion;
     private String encuadernacion;
-
+    public boolean cancel = false;
     private boolean finished = false;
 
     BookClient client = new BookClient();
 
     public fetchBooks(String query, final Context context) {
-        client.getBooks(query, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response != null) {
-                        // Get the docs json array
-                        docs = response.getJSONArray("docs");
 
-                        for (int i = 0; i < docs.length(); i++) {
-                            JSONObject bookJson = null;
-                            try {
-                                bookJson = docs.getJSONObject(i);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                continue;
+            if(cancel == false){
+            client.getBooks(query, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        if (response != null) {
+                            // Get the docs json array
+                            docs = response.getJSONArray("docs");
+                            for (int i = 0; i < docs.length(); i++) {
+                                JSONObject bookJson = null;
+                                try {
+                                    bookJson = docs.getJSONObject(i);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    continue;
+                                }
+                                if(finished == false) {
+                                    if (bookJson.has("title")) {
+                                        titulo = bookJson.getString("title");
+                                    }
+                                    autor = getAuthor(bookJson);
+                                    fechapublicacion = bookJson.has("first_publish_year") ? bookJson.getString("first_publish_year") : "";
+
+                                    if (bookJson.has("cover_edition_key")) {
+                                        openLibraryId = bookJson.getString("cover_edition_key");
+                                    } else if (bookJson.has("edition_key")) {
+                                        final JSONArray ids = bookJson.getJSONArray("edition_key");
+                                        openLibraryId = ids.getString(0);
+                                    }
+
+                                    if (!(openLibraryId.equals(""))) {
+                                        getDetails(openLibraryId, context);
+                                    }
+                                }
+
+                                if(cancel == false){
+                                    finished=true;
+                                    ((newbook)context).Refresh();
+                                }
                             }
-                            if(finished == false) {
-                                if (bookJson.has("title")) {
-                                    titulo = bookJson.getString("title");
-                                }
-                                autor = getAuthor(bookJson);
-                                fechapublicacion = bookJson.has("first_publish_year") ? bookJson.getString("first_publish_year") : "";
-
-                                if (bookJson.has("cover_edition_key")) {
-                                    openLibraryId = bookJson.getString("cover_edition_key");
-                                } else if (bookJson.has("edition_key")) {
-                                    final JSONArray ids = bookJson.getJSONArray("edition_key");
-                                    openLibraryId = ids.getString(0);
-                                }
-
-                                if (!(openLibraryId.equals(""))) {
-                                    getDetails(openLibraryId, context);
-                                }
-                            }
-                            finished=true;
                         }
+                    } catch (JSONException e) {
+                        // Invalid JSON format, show appropriate error.
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    // Invalid JSON format, show appropriate error.
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
     }
 
     private void getDetails (String ID,final Context context){
@@ -113,12 +122,11 @@ public class fetchBooks {
                     {
                         encuadernacion = resp.getString("physical_format");
                     }
-
-                    ((newbook)context).Refresh();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
         });
     }
 

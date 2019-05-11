@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -121,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
                             return true;
                         }
-                        Toast.makeText(MainActivity.this, "Actualizado", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(R.id.coord), "Actualizado", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         return true;
                     default:
                         return false;
@@ -191,16 +195,17 @@ public class MainActivity extends AppCompatActivity {
                 try
                 {
                     refreshList();
+                    Snackbar snackbar = Snackbar
+                            .make(layout, "Libro agregado correctamente", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }catch (Exception e)
                 {
                     Toast.makeText(MainActivity.this, "Error cargando datos", Toast.LENGTH_SHORT).show();
                 }
             }
             else if(resultCode == newbook.CANCELADO){
-
             }
             else{
-                Toast.makeText(this, "Solicitar tecnico, problema en newbook", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -208,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
                 .getMenuInfo();
 
-        StructListBooks libroseleccionado = data.get(info.position);
+        final StructListBooks libroseleccionado = data.get(info.position);
 
         switch (item.getItemId()){
             case R.id.edit_item:
@@ -222,10 +227,24 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.remove_item:
-                db.delete("libros", "id="+ libroseleccionado.getID().toString(), null);
-                data.remove(info.position);
-                adaptador = new AdaptadorLibros(this, data);
-                listBooks.setAdapter(adaptador);
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Eliminar")
+                        .setMessage("¿Está seguro que desea eliminar este libro?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.delete("libros", "id="+ libroseleccionado.getID().toString(), null);
+                                data.remove(info.position);
+                                adaptador = new AdaptadorLibros(MainActivity.this, data);
+                                listBooks.setAdapter(adaptador);
+                            }
+                        })
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -263,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Dialog de ingreso valor para ir a newBook.
     public void showDialog(View view){
         // con este tema personalizado evitamos los bordes por defecto
         customDialog = new Dialog(this);

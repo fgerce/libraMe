@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +23,6 @@ import com.fede.librame.R;
 import com.fede.librame.Helpers.UsuariosSQLiteHelper;
 
 public class Login extends AppCompatActivity {
-
-    public String username;
-    public String password;
 
     private Button btnLogin;
     private Button btnCreate;
@@ -117,7 +115,6 @@ public class Login extends AppCompatActivity {
                         editor.putBoolean("stateCheck", false);
                         editor.commit();
                     }
-                    Toast.makeText(Login.this,R.string.ingresando,Toast.LENGTH_SHORT).show();
                     Intent toMain = new Intent().setClass(Login.this, MainActivity.class);
                     toMain.putExtra("User", struser);
                     startActivity(toMain);

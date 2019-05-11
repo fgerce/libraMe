@@ -18,6 +18,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.fede.librame.Adapters.ViewPagerAdapter;
@@ -30,6 +31,8 @@ import com.fede.librame.R;
 
 import java.net.URI;
 import java.sql.Struct;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BookDetails extends AppCompatActivity {
 
@@ -42,6 +45,7 @@ public class BookDetails extends AppCompatActivity {
     private SQLiteDatabase db;
     private Toolbar toolbar;
     private ConstraintLayout layout;
+    private static final long timeOut = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +58,28 @@ public class BookDetails extends AppCompatActivity {
         layout = findViewById(R.id.detailsLayout);
         refreshColor(layout);
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setTitle("Detalles");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.primaryTextColor));
         toolbar.inflateMenu(R.menu.toolbardetails);
 
+        TimerTask taskTimeOut = new TimerTask() {
+            @Override
+            public void run() {
+                //Fin proceso
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(taskTimeOut, timeOut);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         try {
             UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "libraMe", null, 1);
             db = usdbh.getReadableDatabase();

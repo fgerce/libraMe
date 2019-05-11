@@ -55,5 +55,19 @@
         <item>#afafaf</item> //Gris
     </string-array>
 
+    <string-array name="tiempos">
+        <item>6000</item>
+        <item>5500</item>
+        <item>5000</item>
+        <item>4500</item>
+        <item>4000</item>
+        <item>3500</item>
+        <item>3000</item>
+        <item>2500</item>
+        <item>2000</item>
+        <item>1500</item>
+        <item>1000</item>
+    </string-array>
+
 
 </resources>

@@ -358,13 +358,12 @@
 
     <com.manojbhadane.QButton
         android:id="@+id/btnEdit"
-        android:layout_width="127dp"
-        android:layout_height="50dp"
+        android:layout_width="62dp"
+        android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:drawableStart="@android:drawable/ic_input_add"
+        android:drawableTop="@drawable/ic_plus_white"
         android:drawablePadding="1dp"
-        android:text="@string/Agregar"
         android:textAlignment="center"
         android:textColor="@color/secondaryTextColor"
         android:textSize="18sp"
@@ -379,13 +378,12 @@
 
     <com.manojbhadane.QButton
         android:id="@+id/btnCancel"
-        android:layout_width="141dp"
-        android:layout_height="50dp"
+        android:layout_width="62dp"
+        android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
+        android:drawableTop="@drawable/ic_cancel"
         android:drawablePadding="1dp"
-        android:text="@string/Cancel"
         android:textAlignment="center"
         android:textColor="@color/secondaryTextColor"
         android:textSize="18sp"
