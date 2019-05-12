@@ -23,7 +23,7 @@ import com.fede.librame.R;
 public class Tab1Info extends Fragment {
 
     private BookDetails activity;
-    private TextView txtTitulo, txtAutor, txtGenero, txtEdicion, txtCantidad;
+    private TextView txtTitulo, txtAutor, txtGenero, txtEdicion, txtCantidad, txtDate;
     public Tab1Info() {
         // Required empty public constructor
     }
@@ -37,11 +37,13 @@ public class Tab1Info extends Fragment {
         txtGenero = v.findViewById(R.id.txt_genero);
         txtEdicion = v.findViewById(R.id.txt_edicion);
         txtCantidad = v.findViewById(R.id.txt_cantidad);
+        txtDate = v.findViewById(R.id.txt_date);
 
         txtTitulo.setText(getString(R.string.Titulo) + ": " + activity.libroactual.getTitulo());
         txtAutor.setText(getString(R.string.Autor) + ": " + activity.libroactual.getAutor());
         txtGenero.setText(getString(R.string.Genero) + ": " + activity.libroactual.getGenero());
         txtEdicion.setText(getString(R.string.Edicion) + ": " + String.valueOf(activity.libroactual.getEdicion()));
+        txtDate.setText(getString(R.string.Fecha) + ": " + activity.libroactual.getFechapublicacion());
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (pref.getBoolean("stock_mode", false) == true)

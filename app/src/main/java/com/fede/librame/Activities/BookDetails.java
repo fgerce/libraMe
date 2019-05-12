@@ -171,6 +171,9 @@ public class BookDetails extends AppCompatActivity {
                         sendData.append("Autor: ");
                         sendData.append(libroactual.getAutor());
                         sendData.append(System.getProperty("line.separator"));
+                        sendData.append("Fecha de publicación: ");
+                        sendData.append(libroactual.getFechapublicacion());
+                        sendData.append(System.getProperty("line.separator"));
                         sendData.append("Imagen: ");
                         sendData.append(libroactual.getRutaportada().toString());
 
