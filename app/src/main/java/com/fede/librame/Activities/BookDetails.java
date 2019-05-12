@@ -159,6 +159,32 @@ public class BookDetails extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.share:
+
+                        StringBuilder sendData = new StringBuilder(100);
+                        sendData.append("Te recomiendo el siguiente libro: ");
+                        sendData.append(System.getProperty("line.separator"));
+                        sendData.append(System.getProperty("line.separator"));
+                        sendData.append("Titulo: ");
+                        sendData.append(libroactual.getTitulo());
+                        sendData.append(System.getProperty("line.separator"));
+                        sendData.append("Autor: ");
+                        sendData.append(libroactual.getAutor());
+                        sendData.append(System.getProperty("line.separator"));
+                        sendData.append("Imagen: ");
+                        sendData.append(libroactual.getRutaportada().toString());
+
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.setPackage("com.whatsapp");
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, sendData.toString());
+                        shareIntent.setType("text/plain");
+                        try {
+                            startActivity(shareIntent);
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(BookDetails.this, "Whatsapp no instalado", Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
                     case R.id.delete:
                         new AlertDialog.Builder(BookDetails.this)
                                 .setTitle("Eliminar")

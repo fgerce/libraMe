@@ -1,7 +1,6 @@
 package com.fede.librame.Activities;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -37,9 +35,11 @@ import com.leinardi.android.speeddial.SpeedDialView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String TAG = "Debugger";
     public ListView listBooks;
     public Toolbar toolbar;
     public String userlog;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     static final int PICK_NEW_BOOK = 1;
     static final int SEARCH_BOOK = 2;
+    static final int SCAN_NEW_BOOK = 3;
 
     Dialog customDialog = null;
 
@@ -143,8 +144,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(toNewBook,PICK_NEW_BOOK);
                         return false; // true to keep the Speed Dial open
                     case R.id.fab_scan:
-                        Toast.makeText(MainActivity.this, "Implementar scan", Toast.LENGTH_SHORT).show();
                         speedDialView.close(true);
+                        Intent toScan = new Intent().setClass(MainActivity.this, Scanner.class);
+                        toScan.putExtra("User", userlog.toString());
+                        startActivityForResult(toScan,SCAN_NEW_BOOK);
                         return true;
                     case R.id.fab_search:
                         showDialog(findViewById(android.R.id.content));
@@ -171,6 +174,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
+        if (requestCode == SCAN_NEW_BOOK) {
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+
+                Intent toNewBook = new Intent().setClass(MainActivity.this, newbook.class);
+                toNewBook.putExtra("User", userlog.toString());
+                toNewBook.putExtra("Query", contents);
+                startActivityForResult(toNewBook,SEARCH_BOOK);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                //Log.d(TAG, "RESULT_CANCELED");
+            }
+        }
         if (requestCode == PICK_NEW_BOOK) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
